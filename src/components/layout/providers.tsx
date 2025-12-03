@@ -12,7 +12,6 @@ export function Providers({ children }: PropsWithChildren) {
       attribute="class"
       defaultTheme="system"
       enableSystem
-      disableTransitionOnChange
     >
       <SmoothScrollProvider>{children}</SmoothScrollProvider>
     </ThemeProvider>

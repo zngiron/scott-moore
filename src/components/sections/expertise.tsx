@@ -145,7 +145,7 @@ export function Expertise() {
           {expertiseItems.map((item) => (
             <motion.div
               key={item.title}
-              className="group rounded-xl border border-border bg-card p-6 transition-colors hover:border-muted-foreground/30 hover:bg-secondary md:p-8"
+              className="group rounded-xl border border-foreground/10 bg-background/70 p-6 backdrop-blur-xl transition-all hover:bg-background/80 dark:border-transparent md:p-8"
               variants={cardVariants}
             >
               <item.icon

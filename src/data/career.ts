@@ -1,10 +1,5 @@
-import careerData from './career.json';
+import type { CareerItem } from '@/lib/types';
 
-export type CareerItem = {
-  year: string;
-  position: string;
-  company: string;
-  description: string;
-};
+import careerData from './career.json';
 
 export const careerItems: CareerItem[] = careerData;

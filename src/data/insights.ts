@@ -1,13 +1,5 @@
-import insightsData from './insights.json';
+import type { InsightArticle } from '@/lib/types';
 
-export interface InsightArticle {
-  id: string;
-  category: string;
-  date: string;
-  source: string;
-  title: string;
-  description: string;
-  url: string;
-}
+import insightsData from './insights.json';
 
 export const insightArticles: InsightArticle[] = insightsData;

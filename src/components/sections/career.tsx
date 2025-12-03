@@ -1,7 +1,7 @@
 'use client';
 
 import type { MotionValue } from 'motion/react';
-import type { CareerItem } from '@/data/career';
+import type { CareerItem } from '@/lib/types';
 
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';

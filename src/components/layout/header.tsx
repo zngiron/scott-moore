@@ -6,7 +6,7 @@ import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { ThemeToggle } from '@/components/common/theme-toggle';
 import { useActiveSection } from '@/hooks/use-active-section';
 
 const navigation = [

@@ -1,6 +1,6 @@
 'use client';
 
-import type { Interview } from '@/data/interviews';
+import type { Interview } from '@/lib/types';
 
 import { Play } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -68,7 +68,7 @@ function InterviewCard({
       type="button"
       variants={itemVariants}
       onClick={handleClick}
-      className="group flex h-96 w-80 shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-border bg-card p-6 text-left transition-colors hover:border-muted-foreground/30 hover:bg-secondary md:w-[368px]"
+      className="group flex h-96 w-80 shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-foreground/10 bg-background/70 p-6 text-left backdrop-blur-xl transition-all hover:bg-background/80 dark:border-transparent md:w-[368px]"
     >
       {/* Thumbnail */}
       <div className="flex h-44 w-full items-center justify-center rounded-lg bg-muted">
@@ -152,7 +152,7 @@ export function Interviews() {
         }
         onOpenChange={(open) => !open && setSelectedInterview(null)}
       >
-        <DialogContent className="max-w-4xl gap-0 overflow-hidden p-0">
+        <DialogContent className="max-w-4xl gap-0 overflow-hidden border border-foreground/10 bg-background/70 p-0 backdrop-blur-xl dark:border-transparent">
           {selectedInterview?.videoId && (
             <div className="aspect-video w-full">
               <iframe

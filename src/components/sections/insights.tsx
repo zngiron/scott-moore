@@ -1,6 +1,6 @@
 'use client';
 
-import type { InsightArticle } from '@/data/insights';
+import type { InsightArticle } from '@/lib/types';
 
 import { motion } from 'motion/react';
 import { useState } from 'react';
@@ -51,7 +51,7 @@ function ArticleCard({ article }: { article: InsightArticle }) {
       variants={itemVariants}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group flex h-64 flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-colors hover:border-muted-foreground/30 hover:bg-secondary"
+      className="group flex h-64 flex-col justify-between rounded-2xl border border-foreground/10 bg-background/70 p-6 backdrop-blur-xl transition-all hover:bg-background/80 dark:border-transparent"
     >
       {/* Content */}
       <div className="flex flex-col gap-2">

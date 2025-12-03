@@ -22,7 +22,7 @@ export function ThemeToggle() {
     return (
       <button
         type="button"
-        className="relative flex size-9 items-center justify-center rounded-full bg-secondary/50 transition-colors hover:bg-secondary"
+        className="relative flex size-9 items-center justify-center rounded-full bg-background/50 backdrop-blur-md transition-colors hover:bg-background/80"
         aria-label="Toggle theme"
       >
         <span className="size-5" />
@@ -35,7 +35,7 @@ export function ThemeToggle() {
   return (
     <motion.button
       type="button"
-      className="relative flex size-9 items-center justify-center rounded-full bg-secondary/50 transition-colors hover:bg-secondary"
+      className="relative flex size-9 items-center justify-center rounded-full bg-background/50 backdrop-blur-md transition-colors hover:bg-background/80"
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       whileTap={{

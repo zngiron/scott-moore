@@ -1,14 +1,5 @@
-import interviewsData from './interviews.json';
+import type { Interview } from '@/lib/types';
 
-export interface Interview {
-  id: string;
-  type: 'youtube' | 'linkedin';
-  url: string;
-  videoId?: string;
-  source: string;
-  year: string;
-  title: string;
-  description: string;
-}
+import interviewsData from './interviews.json';
 
 export const interviews: Interview[] = interviewsData as Interview[];
