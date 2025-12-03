@@ -1,9 +1,12 @@
 'use client';
 
-import { type MotionValue, motion, useScroll } from 'motion/react';
+import type { MotionValue } from 'motion/react';
+import type { CareerItem } from '@/data/career';
+
+import { motion, useScroll } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
-import { type CareerItem, careerItems } from '@/data/career';
+import { careerItems } from '@/data/career';
 
 function TimelineItem({
   item,
@@ -22,7 +25,10 @@ function TimelineItem({
   const itemEnd = (index + 1) / itemCount;
 
   // Calculate visibility for this item (0 to 1)
-  const itemProgress = Math.max(0, Math.min(1, (progress - itemStart) / (itemEnd - itemStart)));
+  const itemProgress = Math.max(
+    0,
+    Math.min(1, (progress - itemStart) / (itemEnd - itemStart)),
+  );
 
   // Sub-animations within item progress
   const bulletVisible = itemProgress > 0;
@@ -40,7 +46,15 @@ function TimelineItem({
             scale: bulletVisible ? 1 : 0,
             opacity: bulletVisible ? 1 : 0,
           }}
-          transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+          transition={{
+            duration: 0.3,
+            ease: [
+              0.25,
+              0.4,
+              0.25,
+              1,
+            ],
+          }}
         />
         {/* Year */}
         <motion.p
@@ -49,7 +63,15 @@ function TimelineItem({
             opacity: bulletVisible ? 1 : 0,
             x: bulletVisible ? 0 : -10,
           }}
-          transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+          transition={{
+            duration: 0.3,
+            ease: [
+              0.25,
+              0.4,
+              0.25,
+              1,
+            ],
+          }}
         >
           {item.year}
         </motion.p>
@@ -62,9 +84,16 @@ function TimelineItem({
           {!isLast && (
             <motion.div
               className="w-[2px] bg-stone-300 origin-top"
-              style={{ height: '100%' }}
-              animate={{ scaleY: lineProgress }}
-              transition={{ duration: 0.1, ease: 'linear' }}
+              style={{
+                height: '100%',
+              }}
+              animate={{
+                scaleY: lineProgress,
+              }}
+              transition={{
+                duration: 0.1,
+                ease: 'linear',
+              }}
             />
           )}
         </div>
@@ -76,7 +105,15 @@ function TimelineItem({
             opacity: contentVisible ? 1 : 0,
             y: contentVisible ? 0 : 10,
           }}
-          transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
+          transition={{
+            duration: 0.3,
+            ease: [
+              0.25,
+              0.4,
+              0.25,
+              1,
+            ],
+          }}
         >
           <p className="font-display text-xl text-black leading-7">
             {item.position}
@@ -95,7 +132,10 @@ export function Career() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end end'],
+    offset: [
+      'start start',
+      'end end',
+    ],
   });
 
   return (
@@ -103,7 +143,9 @@ export function Career() {
       ref={sectionRef}
       className="bg-stone-100 relative"
       // Height = viewport + extra scroll space for each item
-      style={{ height: `${100 + careerItems.length * 50}vh` }}
+      style={{
+        height: `${100 + careerItems.length * 50}vh`,
+      }}
     >
       {/* Sticky container */}
       <div className="sticky top-0 h-dvh flex items-center">
@@ -177,10 +219,16 @@ function TimelineItemWithProgress({
 
   useEffect(() => {
     return progressValue.on('change', (v) => setProgress(v));
-  }, [progressValue]);
+  }, [
+    progressValue,
+  ]);
 
   return (
-    <TimelineItem item={item} index={index} isLast={isLast} progress={progress} />
+    <TimelineItem
+      item={item}
+      index={index}
+      isLast={isLast}
+      progress={progress}
+    />
   );
 }
-

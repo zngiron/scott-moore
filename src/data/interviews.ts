@@ -1,0 +1,45 @@
+export interface Interview {
+  id: string;
+  type: 'youtube' | 'linkedin';
+  url: string;
+  videoId?: string;
+  source: string;
+  year: string;
+  title: string;
+  description: string;
+}
+
+export const interviews: Interview[] = [
+  {
+    id: '1',
+    type: 'linkedin',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7349265179609620481/',
+    source: 'LinkedIn',
+    year: '2024',
+    title: 'Philippines Wealth Growth Insights',
+    description:
+      'Philippines saw a 32% growth in individuals with $1M+ in investable assets over the past decade - outpacing many developed economies.',
+  },
+  {
+    id: '2',
+    type: 'youtube',
+    url: 'https://www.youtube.com/watch?v=YpaKNBJmQYE',
+    videoId: 'YpaKNBJmQYE',
+    source: 'YouTube',
+    year: '2024',
+    title: 'Global Investment Strategies',
+    description:
+      'Discussing portfolio optimization strategies for high-net-worth individuals in emerging markets.',
+  },
+  {
+    id: '3',
+    type: 'youtube',
+    url: 'https://www.youtube.com/watch?v=GAaysNe_3dU',
+    videoId: 'GAaysNe_3dU',
+    source: 'YouTube',
+    year: '2024',
+    title: 'Wealth Preservation Strategies',
+    description:
+      'Expert insights on risk management and long-term wealth preservation in volatile markets.',
+  },
+];

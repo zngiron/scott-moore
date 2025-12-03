@@ -35,7 +35,7 @@ const itemVariants = {
         0.4,
         0.25,
         1,
-      ],
+      ] as const,
     },
   },
 };

@@ -72,7 +72,12 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.25, 0.4, 0.25, 1],
+      ease: [
+        0.25,
+        0.4,
+        0.25,
+        1,
+      ] as const,
     },
   },
 };
@@ -87,7 +92,12 @@ const cardVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: [0.25, 0.4, 0.25, 1],
+      ease: [
+        0.25,
+        0.4,
+        0.25,
+        1,
+      ] as const,
     },
   },
 };
@@ -100,7 +110,10 @@ export function Expertise() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{
+          once: true,
+          amount: 0.2,
+        }}
       >
         {/* Section Header */}
         <div className="mb-16 md:mb-20">
@@ -149,4 +162,3 @@ export function Expertise() {
     </section>
   );
 }
-

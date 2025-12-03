@@ -8,55 +8,69 @@ interface WaveFractalProps {
 
 export function WaveFractal({ className }: WaveFractalProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
+  const mouseRef = useRef({
+    x: 0,
+    y: 0,
+  });
   const animationRef = useRef<number>(0);
 
-  const draw = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number, time: number) => {
-    ctx.clearRect(0, 0, width, height);
+  const draw = useCallback(
+    (
+      ctx: CanvasRenderingContext2D,
+      width: number,
+      height: number,
+      time: number,
+    ) => {
+      ctx.clearRect(0, 0, width, height);
 
-    const mouseX = mouseRef.current.x;
-    const mouseY = mouseRef.current.y;
+      const mouseX = mouseRef.current.x;
+      const mouseY = mouseRef.current.y;
 
-    const lineCount = 40;
-    const baseAmplitude = height * 0.15;
-    const baseFrequency = 0.003;
+      const lineCount = 40;
+      const baseAmplitude = height * 0.15;
+      const baseFrequency = 0.003;
 
-    for (let i = 0; i < lineCount; i++) {
-      const progress = i / lineCount;
-      const yOffset = height * 0.3 + progress * height * 0.5;
-      const opacity = 0.08 + progress * 0.12;
-      const amplitude = baseAmplitude * (0.5 + progress * 0.8);
-      const frequency = baseFrequency * (1 + progress * 0.5);
-      const phase = time * 0.0005 + i * 0.15;
+      for (let i = 0; i < lineCount; i++) {
+        const progress = i / lineCount;
+        const yOffset = height * 0.3 + progress * height * 0.5;
+        const opacity = 0.08 + progress * 0.12;
+        const amplitude = baseAmplitude * (0.5 + progress * 0.8);
+        const frequency = baseFrequency * (1 + progress * 0.5);
+        const phase = time * 0.0005 + i * 0.15;
 
-      ctx.beginPath();
-      ctx.strokeStyle = `rgba(168, 162, 158, ${opacity})`;
-      ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(168, 162, 158, ${opacity})`;
+        ctx.lineWidth = 1;
 
-      for (let x = 0; x <= width; x += 3) {
-        const dx = x - mouseX;
-        const dy = yOffset - mouseY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const influence = Math.max(0, 1 - distance / 300) * 50;
+        for (let x = 0; x <= width; x += 3) {
+          const dx = x - mouseX;
+          const dy = yOffset - mouseY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const influence = Math.max(0, 1 - distance / 300) * 50;
 
-        const wave1 = Math.sin(x * frequency + phase) * amplitude;
-        const wave2 = Math.sin(x * frequency * 2.1 + phase * 1.3) * amplitude * 0.3;
-        const wave3 = Math.sin(x * frequency * 0.5 + phase * 0.7) * amplitude * 0.5;
+          const wave1 = Math.sin(x * frequency + phase) * amplitude;
+          const wave2 =
+            Math.sin(x * frequency * 2.1 + phase * 1.3) * amplitude * 0.3;
+          const wave3 =
+            Math.sin(x * frequency * 0.5 + phase * 0.7) * amplitude * 0.5;
 
-        const mouseWave = Math.sin(distance * 0.02 - time * 0.003) * influence;
+          const mouseWave =
+            Math.sin(distance * 0.02 - time * 0.003) * influence;
 
-        const y = yOffset + wave1 + wave2 + wave3 + mouseWave;
+          const y = yOffset + wave1 + wave2 + wave3 + mouseWave;
 
-        if (x === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
+          if (x === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
-      }
 
-      ctx.stroke();
-    }
-  }, []);
+        ctx.stroke();
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -105,7 +119,9 @@ export function WaveFractal({ className }: WaveFractalProps) {
     resizeObserver.observe(canvas);
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, {
+      passive: true,
+    });
 
     return () => {
       cancelAnimationFrame(animationRef.current);
@@ -113,14 +129,18 @@ export function WaveFractal({ className }: WaveFractalProps) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [draw]);
+  }, [
+    draw,
+  ]);
 
   return (
     <canvas
       ref={canvasRef}
       className={className}
-      style={{ width: '100%', height: '100%' }}
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
     />
   );
 }
-
