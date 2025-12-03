@@ -121,7 +121,7 @@ export function Expertise() {
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
           <motion.p
-            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
+            className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
           >
             Expertise
@@ -145,17 +145,17 @@ export function Expertise() {
           {expertiseItems.map((item) => (
             <motion.div
               key={item.title}
-              className="group rounded-xl border border-stone-200 bg-white p-6 transition-colors hover:border-stone-300 hover:bg-stone-50 md:p-8"
+              className="group rounded-xl border border-border bg-card p-6 transition-colors hover:border-muted-foreground/30 hover:bg-secondary md:p-8"
               variants={cardVariants}
             >
               <item.icon
-                className="mb-5 size-7 text-stone-700 transition-transform group-hover:scale-110"
+                className="mb-5 size-7 text-foreground/80 transition-transform group-hover:scale-110"
                 strokeWidth={1.5}
               />
               <h3 className="mb-3 font-display text-lg font-semibold">
                 {item.title}
               </h3>
-              <p className="text-sm leading-relaxed text-stone-500">
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 {item.description}
               </p>
             </motion.div>

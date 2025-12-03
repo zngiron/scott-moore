@@ -25,7 +25,7 @@ function AnimatedLink({
     >
       {children}
       <motion.span
-        className="absolute -bottom-1 left-0 h-px bg-white"
+        className="absolute -bottom-1 left-0 h-px bg-current"
         initial={{
           width: 0,
         }}

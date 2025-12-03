@@ -75,7 +75,7 @@ function AnimatedStat({ value, label, prefix = '', suffix = '' }: StatProps) {
         {suffix}
       </motion.p>
       <motion.p
-        className="text-base leading-6 text-stone-500"
+        className="text-base leading-6 text-muted-foreground"
         initial={{
           opacity: 0,
           y: 10,
@@ -161,7 +161,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-stone-100 md:snap-start"
+      className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-secondary md:snap-start"
     >
       {/* Content */}
       <motion.div
@@ -177,7 +177,7 @@ export function About() {
         <div className="ml-auto max-w-xl">
           {/* Header */}
           <motion.p
-            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
+            className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
           >
             About
@@ -193,7 +193,7 @@ export function About() {
 
           {/* Description */}
           <motion.p
-            className="mb-12 text-lg leading-7 text-stone-500 md:mb-16"
+            className="mb-12 text-lg leading-7 text-muted-foreground md:mb-16"
             variants={itemVariants}
           >
             A finance executive driven by strategy and results. Focused on

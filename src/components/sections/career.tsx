@@ -109,7 +109,7 @@ function TimelineItem({
       <div className="flex items-center gap-4">
         {/* Circle */}
         <motion.div
-          className="size-2.5 shrink-0 rounded-full bg-black will-change-transform"
+          className="size-2.5 shrink-0 rounded-full bg-foreground will-change-transform"
           style={{
             scale: bulletScale,
             opacity: bulletOpacity,
@@ -117,7 +117,7 @@ function TimelineItem({
         />
         {/* Year */}
         <motion.p
-          className="text-sm text-stone-500 will-change-transform"
+          className="text-sm text-muted-foreground will-change-transform"
           style={{
             opacity: yearOpacity,
             x: yearX,
@@ -133,7 +133,7 @@ function TimelineItem({
         <div className="flex w-2.5 shrink-0 items-center justify-center">
           {!isLast && (
             <motion.div
-              className="h-full w-0.5 origin-top bg-stone-300 will-change-transform"
+              className="h-full w-0.5 origin-top bg-border will-change-transform"
               style={{
                 scaleY: lineScaleY,
               }}
@@ -149,11 +149,15 @@ function TimelineItem({
             y: contentY,
           }}
         >
-          <p className="font-display text-lg leading-6 text-black">
+          <p className="font-display text-lg leading-6 text-foreground">
             {item.position}
           </p>
-          <p className="text-sm leading-5 text-stone-500">{item.company}</p>
-          <p className="text-sm leading-5 text-stone-500">{item.description}</p>
+          <p className="text-sm leading-5 text-muted-foreground">
+            {item.company}
+          </p>
+          <p className="text-sm leading-5 text-muted-foreground">
+            {item.description}
+          </p>
         </motion.div>
       </div>
     </div>
@@ -174,7 +178,7 @@ export function Career() {
     <section
       ref={sectionRef}
       id="career"
-      className="relative bg-stone-100 md:snap-start"
+      className="relative bg-secondary md:snap-start"
       // Reduced height for better mobile UX
       style={{
         height: `${100 + careerItems.length * 40}vh`,
@@ -187,7 +191,7 @@ export function Career() {
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
             {/* Left Column - Header */}
             <div className="flex flex-col gap-6">
-              <p className="text-xl uppercase tracking-widest text-stone-500">
+              <p className="text-xl uppercase tracking-widest text-muted-foreground">
                 Career
               </p>
 

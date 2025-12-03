@@ -1,5 +1,6 @@
 'use client';
 
+import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface WaveFractalProps {
@@ -60,6 +61,7 @@ export function WaveFractal({ className }: WaveFractalProps) {
   });
   const animationRef = useRef<number>(0);
   const frameCountRef = useRef(0);
+  const { resolvedTheme } = useTheme();
 
   const { lineCount, stepSize, enabled, frameSkip } = useOptimizedRendering();
 
@@ -69,6 +71,7 @@ export function WaveFractal({ className }: WaveFractalProps) {
       width: number,
       height: number,
       time: number,
+      isDark: boolean,
     ) => {
       ctx.clearRect(0, 0, width, height);
 
@@ -80,6 +83,9 @@ export function WaveFractal({ className }: WaveFractalProps) {
       const baseAmplitude = height * 0.15;
       const baseFrequency = 0.003;
 
+      // Light mode: warm gray, Dark mode: lighter gray for visibility
+      const waveColor = isDark ? '180, 180, 180' : '168, 162, 158';
+
       for (let i = 0; i < lineCount; i++) {
         const progress = i / lineCount;
         const yOffset = height * 0.3 + progress * height * 0.5;
@@ -89,7 +95,7 @@ export function WaveFractal({ className }: WaveFractalProps) {
         const phase = time * 0.0005 + i * 0.15;
 
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(168, 162, 158, ${opacity})`;
+        ctx.strokeStyle = `rgba(${waveColor}, ${opacity})`;
         ctx.lineWidth = 1;
 
         for (let x = 0; x <= width; x += stepSize) {
@@ -171,13 +177,15 @@ export function WaveFractal({ className }: WaveFractalProps) {
       }
     };
 
+    const isDark = resolvedTheme === 'dark';
+
     const animate = (time: number) => {
       frameCountRef.current++;
 
       // Skip frames on mobile for better performance
       if (frameCountRef.current % frameSkip === 0) {
         const rect = canvas.getBoundingClientRect();
-        draw(ctx, rect.width, rect.height, time);
+        draw(ctx, rect.width, rect.height, time, isDark);
       }
 
       animationRef.current = requestAnimationFrame(animate);
@@ -206,6 +214,7 @@ export function WaveFractal({ className }: WaveFractalProps) {
     draw,
     enabled,
     frameSkip,
+    resolvedTheme,
   ]);
 
   if (!enabled) {

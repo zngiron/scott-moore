@@ -68,22 +68,22 @@ function InterviewCard({
       type="button"
       variants={itemVariants}
       onClick={handleClick}
-      className="group flex h-96 w-80 shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-stone-300 bg-white p-6 text-left transition-colors hover:border-stone-400 hover:bg-stone-50 md:w-[368px]"
+      className="group flex h-96 w-80 shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-border bg-card p-6 text-left transition-colors hover:border-muted-foreground/30 hover:bg-secondary md:w-[368px]"
     >
       {/* Thumbnail */}
-      <div className="flex h-44 w-full items-center justify-center rounded-lg bg-black/5">
-        <Play className="size-12 fill-none stroke-stone-900 stroke-[1.5] transition-transform group-hover:scale-110" />
+      <div className="flex h-44 w-full items-center justify-center rounded-lg bg-muted">
+        <Play className="size-12 fill-none stroke-foreground stroke-[1.5] transition-transform group-hover:scale-110" />
       </div>
 
       {/* Content */}
       <div className="flex w-full flex-col gap-2">
-        <p className="text-sm leading-5 text-stone-500">
+        <p className="text-sm leading-5 text-muted-foreground">
           {interview.source} · {interview.year}
         </p>
-        <h3 className="font-display text-xl leading-7 text-black">
+        <h3 className="font-display text-xl leading-7 text-foreground">
           {interview.title}
         </h3>
-        <p className="line-clamp-2 text-base leading-6 text-stone-500">
+        <p className="line-clamp-2 text-base leading-6 text-muted-foreground">
           {interview.description}
         </p>
       </div>
@@ -115,7 +115,7 @@ export function Interviews() {
         {/* Header */}
         <div className="mb-12 px-6 md:mb-16 md:px-36">
           <motion.p
-            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
+            className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
           >
             Interviews

@@ -51,17 +51,17 @@ function ArticleCard({ article }: { article: InsightArticle }) {
       variants={itemVariants}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group flex h-64 flex-col justify-between rounded-2xl border border-stone-300 bg-white p-6 transition-colors hover:border-stone-400 hover:bg-stone-50"
+      className="group flex h-64 flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-colors hover:border-muted-foreground/30 hover:bg-secondary"
     >
       {/* Content */}
       <div className="flex flex-col gap-2">
-        <p className="text-sm leading-5 text-stone-500">
+        <p className="text-sm leading-5 text-muted-foreground">
           {article.category} · {article.date} · {article.source}
         </p>
-        <h3 className="font-display text-xl font-light leading-7 text-black">
+        <h3 className="font-display text-xl font-light leading-7 text-foreground">
           {article.title}
         </h3>
-        <p className="line-clamp-2 text-sm leading-5 text-stone-500">
+        <p className="line-clamp-2 text-sm leading-5 text-muted-foreground">
           {article.description}
         </p>
       </div>
@@ -98,7 +98,7 @@ export function Insights() {
   return (
     <section
       id="insights"
-      className="flex min-h-dvh flex-col justify-center bg-stone-100 md:snap-start"
+      className="flex min-h-dvh flex-col justify-center bg-secondary md:snap-start"
     >
       <motion.div
         className="px-6 py-24 md:px-36 md:py-32"
@@ -113,7 +113,7 @@ export function Insights() {
         {/* Header */}
         <div className="mb-12 flex flex-col gap-6 md:mb-16">
           <motion.p
-            className="text-xl uppercase tracking-widest text-stone-500"
+            className="text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
           >
             Insights

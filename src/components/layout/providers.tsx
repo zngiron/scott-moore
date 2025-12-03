@@ -8,7 +8,12 @@ import { SmoothScrollProvider } from '@/components/layout/smooth-scroll';
 
 export function Providers({ children }: PropsWithChildren) {
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <SmoothScrollProvider>{children}</SmoothScrollProvider>
     </ThemeProvider>
   );

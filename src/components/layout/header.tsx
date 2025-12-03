@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { useActiveSection } from '@/hooks/use-active-section';
 
 const navigation = [
@@ -50,7 +51,7 @@ export function Header() {
   const closeMenu = () => setMobileMenuOpen(false);
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 bg-white/50 backdrop-blur-md">
+    <header className="fixed left-0 right-0 top-0 z-50 bg-background/50 backdrop-blur-md">
       <div className="flex items-center justify-between px-6 py-4 md:px-36">
         <Link
           href="/"
@@ -73,7 +74,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative py-1 text-sm"
+                className="relative py-1 text-sm text-foreground"
                 onMouseEnter={() => setHoveredLink(item.name)}
               >
                 {item.name}
@@ -98,66 +99,70 @@ export function Header() {
               </Link>
             );
           })}
+          <ThemeToggle />
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          className="-mr-2 p-2 md:hidden"
-          onClick={toggleMenu}
-          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-navigation"
-        >
-          <AnimatePresence
-            mode="wait"
-            initial={false}
+        {/* Mobile Controls */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="-mr-2 p-2"
+            onClick={toggleMenu}
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
-            {mobileMenuOpen ? (
-              <motion.span
-                key="close"
-                initial={{
-                  opacity: 0,
-                  rotate: -90,
-                }}
-                animate={{
-                  opacity: 1,
-                  rotate: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  rotate: 90,
-                }}
-                transition={{
-                  duration: 0.2,
-                }}
-              >
-                <X className="size-6" />
-              </motion.span>
-            ) : (
-              <motion.span
-                key="menu"
-                initial={{
-                  opacity: 0,
-                  rotate: 90,
-                }}
-                animate={{
-                  opacity: 1,
-                  rotate: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  rotate: -90,
-                }}
-                transition={{
-                  duration: 0.2,
-                }}
-              >
-                <Menu className="size-6" />
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </button>
+            <AnimatePresence
+              mode="wait"
+              initial={false}
+            >
+              {mobileMenuOpen ? (
+                <motion.span
+                  key="close"
+                  initial={{
+                    opacity: 0,
+                    rotate: -90,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    rotate: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    rotate: 90,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                >
+                  <X className="size-6" />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="menu"
+                  initial={{
+                    opacity: 0,
+                    rotate: 90,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    rotate: 0,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    rotate: -90,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                  }}
+                >
+                  <Menu className="size-6" />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}

@@ -54,7 +54,7 @@ export function Hero() {
       >
         <div className="max-w-xl">
           <motion.p
-            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
+            className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
           >
             Finance Executive
@@ -69,7 +69,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            className="mb-10 max-w-md text-lg leading-7 text-stone-500"
+            className="mb-10 max-w-md text-lg leading-7 text-muted-foreground"
             variants={itemVariants}
           >
             Experienced finance executive helping individuals and businesses

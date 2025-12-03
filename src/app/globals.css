@@ -161,18 +161,6 @@ body::-webkit-scrollbar {
   height: 0;
 }
 
-/* Reduced motion support - disable animations for users who prefer */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 /* GPU acceleration hints for animated elements */
 @layer utilities {
   .gpu-accelerate {
