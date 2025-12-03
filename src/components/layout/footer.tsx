@@ -3,6 +3,8 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
 
+import { cn } from '@/lib/utils';
+
 function AnimatedLink({
   href,
   children,
@@ -25,12 +27,12 @@ function AnimatedLink({
     >
       {children}
       <motion.span
-        className="absolute -bottom-1 left-0 h-px bg-current"
+        className="absolute -bottom-1 left-0 h-px w-full origin-left bg-current"
         initial={{
-          width: 0,
+          scaleX: 0,
         }}
         animate={{
-          width: isHovered ? '100%' : 0,
+          scaleX: isHovered ? 1 : 0,
         }}
         transition={{
           duration: 0.3,
@@ -83,11 +85,17 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative overflow-hidden bg-black py-24 md:snap-start md:py-32"
+      className={cn(
+        'overflow-hidden',
+        'relative',
+        'flex min-h-dvh flex-col justify-center py-24',
+        'bg-black',
+        'md:snap-start md:py-32',
+      )}
     >
       {/* Content */}
       <motion.div
-        className="relative px-6 md:px-36"
+        className={cn('relative', 'px-6', 'lg:px-36')}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -96,14 +104,30 @@ export function Footer() {
           amount: 0.3,
         }}
       >
-        <div className="flex w-full flex-col justify-between gap-12 lg:flex-row lg:items-start">
-          {/* Left - Title */}
-          <motion.h2
-            className="font-display text-4xl font-light leading-tight text-stone-50 md:text-6xl"
-            variants={itemVariants}
-          >
-            Contact
-          </motion.h2>
+        <div
+          className={cn(
+            'flex w-full flex-col justify-between gap-12',
+            'lg:flex-row lg:items-start',
+          )}
+        >
+          {/* Left - Title & Copyright (desktop) */}
+          <div className="flex flex-col gap-6">
+            <motion.h2
+              className={cn(
+                'font-display text-4xl font-light leading-tight text-white',
+                'md:text-6xl',
+              )}
+              variants={itemVariants}
+            >
+              Contact
+            </motion.h2>
+            <motion.p
+              className={cn('hidden', 'text-sm text-white/60', 'lg:block')}
+              variants={itemVariants}
+            >
+              © 2025 Scott Moore.
+            </motion.p>
+          </div>
 
           {/* Right - Content */}
           <div className="flex max-w-xl flex-col gap-6">
@@ -120,7 +144,7 @@ export function Footer() {
               className="flex flex-col gap-1 text-white"
               variants={itemVariants}
             >
-              <span className="text-sm leading-5 text-stone-400">Email</span>
+              <span className="text-sm leading-5 text-white/60">Email</span>
               <AnimatedLink href="mailto:hi@scottmoore.com">
                 hi@scottmoore.com
               </AnimatedLink>
@@ -131,7 +155,7 @@ export function Footer() {
               className="flex flex-col gap-1 text-white"
               variants={itemVariants}
             >
-              <span className="text-sm leading-5 text-stone-400">LinkedIn</span>
+              <span className="text-sm leading-5 text-white/60">LinkedIn</span>
               <AnimatedLink
                 href="https://www.linkedin.com/in/scott-moore-78023a20"
                 external
@@ -141,27 +165,15 @@ export function Footer() {
             </motion.div>
           </div>
         </div>
-      </motion.div>
 
-      {/* Copyright */}
-      <motion.p
-        className="mt-16 px-6 text-sm text-stone-400 md:px-36"
-        initial={{
-          opacity: 0,
-        }}
-        whileInView={{
-          opacity: 1,
-        }}
-        viewport={{
-          once: true,
-        }}
-        transition={{
-          duration: 0.6,
-          delay: 0.5,
-        }}
-      >
-        © 2025 Scott Moore. All rights reserved.
-      </motion.p>
+        {/* Copyright (mobile) */}
+        <motion.p
+          className={cn('mt-12', 'text-sm text-white/60', 'lg:hidden')}
+          variants={itemVariants}
+        >
+          © 2025 Scott Moore.
+        </motion.p>
+      </motion.div>
     </footer>
   );
 }

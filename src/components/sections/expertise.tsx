@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
+import { cn } from '@/lib/utils';
+
 const expertiseItems = [
   {
     icon: BarChart3,
@@ -106,10 +108,10 @@ export function Expertise() {
   return (
     <section
       id="expertise"
-      className="flex min-h-dvh flex-col justify-center md:snap-start"
+      className={cn('flex min-h-dvh flex-col justify-center', 'md:snap-start')}
     >
       <motion.div
-        className="px-6 py-24 md:px-36 md:py-32"
+        className={cn('px-6 py-24', 'lg:px-36 lg:py-32')}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -119,7 +121,7 @@ export function Expertise() {
         }}
       >
         {/* Section Header */}
-        <div className="mb-12 md:mb-16">
+        <div className={cn('mb-12', 'md:mb-16')}>
           <motion.p
             className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
@@ -128,7 +130,10 @@ export function Expertise() {
           </motion.p>
 
           <motion.h2
-            className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
+            className={cn(
+              'font-display text-4xl font-light leading-tight tracking-tight',
+              'md:text-6xl',
+            )}
             variants={itemVariants}
           >
             Where Strategy
@@ -139,19 +144,57 @@ export function Expertise() {
 
         {/* Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
+          className={cn(
+            'grid grid-cols-1 gap-4',
+            'md:grid-cols-2 md:gap-6 lg:grid-cols-3',
+          )}
           variants={containerVariants}
         >
           {expertiseItems.map((item) => (
             <motion.div
               key={item.title}
-              className="group rounded-xl border border-foreground/10 bg-background/70 p-6 backdrop-blur-xl transition-all hover:bg-background/80 dark:border-transparent md:p-8"
+              className={cn(
+                'group',
+                'rounded-xl border border-foreground/10 p-6',
+                'bg-background/70 backdrop-blur-xl',
+                'dark:border-transparent',
+                'md:p-8',
+              )}
               variants={cardVariants}
+              whileHover={{
+                scale: 1.02,
+                y: -4,
+              }}
+              transition={{
+                duration: 0.2,
+                ease: [
+                  0.25,
+                  0.4,
+                  0.25,
+                  1,
+                ],
+              }}
             >
-              <item.icon
-                className="mb-5 size-7 text-foreground/80 transition-transform group-hover:scale-110"
-                strokeWidth={1.5}
-              />
+              <motion.div
+                className="mb-5 inline-block"
+                whileHover={{
+                  scale: 1.1,
+                }}
+                transition={{
+                  duration: 0.2,
+                  ease: [
+                    0.25,
+                    0.4,
+                    0.25,
+                    1,
+                  ],
+                }}
+              >
+                <item.icon
+                  className="size-7 text-foreground/80"
+                  strokeWidth={1.5}
+                />
+              </motion.div>
               <h3 className="mb-3 font-display text-lg font-semibold">
                 {item.title}
               </h3>

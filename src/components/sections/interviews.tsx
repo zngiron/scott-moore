@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 import { interviews } from '@/data/interviews';
 
 const containerVariants = {
@@ -68,11 +69,44 @@ function InterviewCard({
       type="button"
       variants={itemVariants}
       onClick={handleClick}
-      className="group flex h-96 w-80 shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-foreground/10 bg-background/70 p-6 text-left backdrop-blur-xl transition-all hover:bg-background/80 dark:border-transparent md:w-[368px]"
+      className={cn(
+        'group',
+        'flex w-full flex-col gap-3 rounded-2xl border border-foreground/10 p-6 text-left',
+        'bg-background/70 backdrop-blur-xl',
+        'cursor-pointer',
+        'dark:border-transparent',
+      )}
+      whileHover={{
+        scale: 1.02,
+      }}
+      transition={{
+        duration: 0.2,
+        ease: [
+          0.25,
+          0.4,
+          0.25,
+          1,
+        ],
+      }}
     >
       {/* Thumbnail */}
-      <div className="flex h-44 w-full items-center justify-center rounded-lg bg-muted">
-        <Play className="size-12 fill-none stroke-foreground stroke-[1.5] transition-transform group-hover:scale-110" />
+      <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-muted">
+        <motion.div
+          whileHover={{
+            scale: 1.1,
+          }}
+          transition={{
+            duration: 0.2,
+            ease: [
+              0.25,
+              0.4,
+              0.25,
+              1,
+            ],
+          }}
+        >
+          <Play className="size-12 fill-none stroke-foreground stroke-[1.5]" />
+        </motion.div>
       </div>
 
       {/* Content */}
@@ -99,11 +133,11 @@ export function Interviews() {
   return (
     <section
       id="interviews"
-      className="relative flex min-h-dvh flex-col justify-center overflow-hidden md:snap-start"
+      className={cn('flex min-h-dvh flex-col justify-center', 'md:snap-start')}
     >
       {/* Content */}
       <motion.div
-        className="relative z-10 py-24 md:py-32"
+        className={cn('px-6 py-24', 'lg:px-36 lg:py-32')}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -113,15 +147,18 @@ export function Interviews() {
         }}
       >
         {/* Header */}
-        <div className="mb-12 px-6 md:mb-16 md:px-36">
+        <div className={cn('mb-12 flex flex-col gap-6', 'md:mb-16')}>
           <motion.p
-            className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
+            className="text-xl uppercase tracking-widest text-muted-foreground"
             variants={itemVariants}
           >
             Interviews
           </motion.p>
           <motion.h2
-            className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
+            className={cn(
+              'font-display text-4xl font-light leading-tight tracking-tight',
+              'md:text-6xl',
+            )}
             variants={itemVariants}
           >
             Thoughts That
@@ -130,10 +167,13 @@ export function Interviews() {
           </motion.h2>
         </div>
 
-        {/* Scrollable Cards */}
+        {/* Cards Grid */}
         <motion.div
-          className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 md:px-36"
-          variants={itemVariants}
+          className={cn(
+            'grid grid-cols-1 gap-4',
+            'md:grid-cols-2 md:gap-6 lg:grid-cols-3',
+          )}
+          variants={containerVariants}
         >
           {interviews.map((interview) => (
             <InterviewCard
@@ -152,7 +192,13 @@ export function Interviews() {
         }
         onOpenChange={(open) => !open && setSelectedInterview(null)}
       >
-        <DialogContent className="max-w-4xl gap-0 overflow-hidden border border-foreground/10 bg-background/70 p-0 backdrop-blur-xl dark:border-transparent">
+        <DialogContent
+          className={cn(
+            'overflow-hidden',
+            'max-w-6xl gap-0 border-none p-0',
+            'bg-background/70 backdrop-blur-xl',
+          )}
+        >
           {selectedInterview?.videoId && (
             <div className="aspect-video w-full">
               <iframe
@@ -165,13 +211,13 @@ export function Interviews() {
             </div>
           )}
           <DialogHeader className="p-6">
-            <p className="text-sm text-stone-500">
+            <p className="text-sm text-muted-foreground">
               {selectedInterview?.source} · {selectedInterview?.year}
             </p>
             <DialogTitle className="font-display text-xl font-normal">
               {selectedInterview?.title}
             </DialogTitle>
-            <DialogDescription className="text-base text-stone-500">
+            <DialogDescription className="text-base text-muted-foreground">
               {selectedInterview?.description}
             </DialogDescription>
           </DialogHeader>

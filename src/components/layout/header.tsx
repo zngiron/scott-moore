@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
 import { ThemeToggle } from '@/components/common/theme-toggle';
+import { cn } from '@/lib/utils';
 import { useActiveSection } from '@/hooks/use-active-section';
 
 const navigation = [
@@ -50,19 +51,35 @@ export function Header() {
   const toggleMenu = () => setMobileMenuOpen((prev) => !prev);
   const closeMenu = () => setMobileMenuOpen(false);
 
+  const isContact = activeSection === 'contact';
+
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 bg-background/50 backdrop-blur-md">
-      <div className="flex items-center justify-between px-6 py-4 md:px-36">
+    <header
+      className={cn(
+        'fixed left-0 right-0 top-0 z-50',
+        'shadow-2xs backdrop-blur-md',
+        'transition-colors duration-300',
+        isContact
+          ? 'bg-black/50 text-white'
+          : 'bg-background/50 text-foreground',
+      )}
+    >
+      <div
+        className={cn(
+          'flex items-center justify-between px-6 py-4',
+          'lg:px-36',
+        )}
+      >
         <Link
           href="/"
-          className="font-display text-xl font-semibold"
+          className="whitespace-nowrap font-display text-xl font-semibold"
         >
           Scott Moore
         </Link>
 
         {/* Desktop Navigation */}
         <nav
-          className="hidden items-center gap-6 md:flex"
+          className={cn('hidden items-center gap-6', 'lg:flex')}
           onMouseLeave={() => setHoveredLink(null)}
         >
           {navigation.map((item) => {
@@ -74,17 +91,17 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative py-1 text-sm text-foreground"
+                className="relative py-1 text-sm"
                 onMouseEnter={() => setHoveredLink(item.name)}
               >
                 {item.name}
                 <motion.span
-                  className="absolute -bottom-0.5 left-0 h-px bg-current"
+                  className="absolute -bottom-1 left-0 h-px w-full origin-left bg-current"
                   initial={{
-                    width: 0,
+                    scaleX: 0,
                   }}
                   animate={{
-                    width: showUnderline ? '100%' : 0,
+                    scaleX: showUnderline ? 1 : 0,
                   }}
                   transition={{
                     duration: 0.3,
@@ -103,11 +120,11 @@ export function Header() {
         </nav>
 
         {/* Mobile Controls */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className={cn('flex items-center gap-2', 'lg:hidden')}>
           <ThemeToggle />
           <button
             type="button"
-            className="-mr-2 p-2"
+            className="-mr-2 p-2 cursor-pointer"
             onClick={toggleMenu}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
@@ -123,17 +140,21 @@ export function Header() {
                   initial={{
                     opacity: 0,
                     rotate: -90,
+                    scale: 0.5,
                   }}
                   animate={{
                     opacity: 1,
                     rotate: 0,
+                    scale: 1,
                   }}
                   exit={{
                     opacity: 0,
                     rotate: 90,
+                    scale: 0.5,
                   }}
                   transition={{
                     duration: 0.2,
+                    ease: 'easeOut',
                   }}
                 >
                   <X className="size-6" />
@@ -143,18 +164,22 @@ export function Header() {
                   key="menu"
                   initial={{
                     opacity: 0,
-                    rotate: 90,
+                    rotate: -90,
+                    scale: 0.5,
                   }}
                   animate={{
                     opacity: 1,
                     rotate: 0,
+                    scale: 1,
                   }}
                   exit={{
                     opacity: 0,
-                    rotate: -90,
+                    rotate: 90,
+                    scale: 0.5,
                   }}
                   transition={{
                     duration: 0.2,
+                    ease: 'easeOut',
                   }}
                 >
                   <Menu className="size-6" />
@@ -172,7 +197,7 @@ export function Header() {
             id="mobile-navigation"
             role="navigation"
             aria-label="Mobile navigation"
-            className="overflow-hidden md:hidden"
+            className={cn('overflow-hidden', 'lg:hidden')}
             initial={{
               height: 0,
               opacity: 0,
@@ -227,13 +252,19 @@ export function Header() {
                     duration: 0.2,
                   }}
                 >
-                  <Link
-                    href={item.href}
-                    className="block py-2 text-lg transition-opacity hover:opacity-70"
-                    onClick={closeMenu}
+                  <motion.div
+                    whileHover={{
+                      opacity: 0.7,
+                    }}
                   >
-                    {item.name}
-                  </Link>
+                    <Link
+                      href={item.href}
+                      className="block py-2 text-lg"
+                      onClick={closeMenu}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
                 </motion.div>
               ))}
             </motion.div>

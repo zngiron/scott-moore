@@ -22,7 +22,7 @@ export function ThemeToggle() {
     return (
       <button
         type="button"
-        className="relative flex size-9 items-center justify-center rounded-full bg-background/50 backdrop-blur-md transition-colors hover:bg-background/80"
+        className="relative flex size-9 items-center justify-center cursor-pointer"
         aria-label="Toggle theme"
       >
         <span className="size-5" />
@@ -35,11 +35,23 @@ export function ThemeToggle() {
   return (
     <motion.button
       type="button"
-      className="relative flex size-9 items-center justify-center rounded-full bg-background/50 backdrop-blur-md transition-colors hover:bg-background/80"
+      className="relative flex size-9 items-center justify-center cursor-pointer"
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       whileTap={{
         scale: 0.95,
+      }}
+      whileHover={{
+        scale: 1.05,
+      }}
+      transition={{
+        duration: 0.15,
+        ease: [
+          0.25,
+          0.4,
+          0.25,
+          1,
+        ],
       }}
     >
       <motion.span
@@ -64,11 +76,7 @@ export function ThemeToggle() {
           ease: 'easeOut',
         }}
       >
-        {isDark ? (
-          <Moon className="size-5 text-foreground" />
-        ) : (
-          <Sun className="size-5 text-foreground" />
-        )}
+        {isDark ? <Moon className="size-5" /> : <Sun className="size-5" />}
       </motion.span>
     </motion.button>
   );

@@ -6,6 +6,7 @@ import type { CareerItem } from '@/lib/types';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 
+import { cn } from '@/lib/utils';
 import { careerItems } from '@/data/career';
 
 // Optimized timeline item using CSS transforms instead of React state
@@ -109,7 +110,11 @@ function TimelineItem({
       <div className="flex items-center gap-4">
         {/* Circle */}
         <motion.div
-          className="size-2.5 shrink-0 rounded-full bg-foreground will-change-transform"
+          className={cn(
+            'size-2 shrink-0 rounded-full',
+            'bg-foreground',
+            'will-change-transform',
+          )}
           style={{
             scale: bulletScale,
             opacity: bulletOpacity,
@@ -117,7 +122,10 @@ function TimelineItem({
         />
         {/* Year */}
         <motion.p
-          className="text-sm text-muted-foreground will-change-transform"
+          className={cn(
+            'text-sm text-muted-foreground',
+            'will-change-transform',
+          )}
           style={{
             opacity: yearOpacity,
             x: yearX,
@@ -130,10 +138,14 @@ function TimelineItem({
       {/* Content Row */}
       <div className="flex gap-4">
         {/* Line Container */}
-        <div className="flex w-2.5 shrink-0 items-center justify-center">
+        <div className="flex w-2 shrink-0 items-center justify-center">
           {!isLast && (
             <motion.div
-              className="h-full w-0.5 origin-top bg-border will-change-transform"
+              className={cn(
+                'h-full w-px origin-top',
+                'bg-border',
+                'will-change-transform',
+              )}
               style={{
                 scaleY: lineScaleY,
               }}
@@ -143,7 +155,7 @@ function TimelineItem({
 
         {/* Text Content */}
         <motion.div
-          className="flex flex-col pb-4 will-change-transform"
+          className={cn('flex flex-col pb-4', 'will-change-transform')}
           style={{
             opacity: contentOpacity,
             y: contentY,
@@ -178,7 +190,7 @@ export function Career() {
     <section
       ref={sectionRef}
       id="career"
-      className="relative bg-secondary md:snap-start"
+      className={cn('relative', 'bg-secondary', 'md:snap-start')}
       // Reduced height for better mobile UX
       style={{
         height: `${100 + careerItems.length * 40}vh`,
@@ -186,16 +198,26 @@ export function Career() {
     >
       {/* Sticky container */}
       <div className="sticky top-0 flex h-dvh items-center">
-        <div className="w-full px-6 md:px-36">
+        <div className={cn('w-full px-6', 'lg:px-36')}>
           {/* Two Column Layout */}
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
+          <div
+            className={cn(
+              'grid grid-cols-1 gap-12',
+              'lg:grid-cols-2 lg:gap-24',
+            )}
+          >
             {/* Left Column - Header */}
             <div className="flex flex-col gap-6">
               <p className="text-xl uppercase tracking-widest text-muted-foreground">
                 Career
               </p>
 
-              <h2 className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl">
+              <h2
+                className={cn(
+                  'font-display text-4xl font-light leading-tight tracking-tight',
+                  'md:text-6xl',
+                )}
+              >
                 A Journey Built on Financial Leadership
               </h2>
             </div>

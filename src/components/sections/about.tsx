@@ -3,6 +3,8 @@
 import { animate, motion, useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { cn } from '@/lib/utils';
+
 interface StatProps {
   value: string;
   label: string;
@@ -47,7 +49,10 @@ function AnimatedStat({ value, label, prefix = '', suffix = '' }: StatProps) {
       className="flex flex-col gap-2"
     >
       <motion.p
-        className="font-display text-4xl font-light leading-tight tracking-tight md:text-5xl"
+        className={cn(
+          'font-display text-4xl font-light leading-tight tracking-tight',
+          'md:text-5xl',
+        )}
         initial={{
           opacity: 0,
           y: 20,
@@ -161,11 +166,17 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-secondary md:snap-start"
+      className={cn(
+        'overflow-hidden',
+        'relative',
+        'flex min-h-dvh flex-col justify-center',
+        'bg-secondary',
+        'md:snap-start',
+      )}
     >
       {/* Content */}
       <motion.div
-        className="relative z-10 px-6 py-24 md:px-36 md:py-32"
+        className={cn('relative z-10', 'px-6 py-24', 'lg:px-36 lg:py-32')}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -185,7 +196,11 @@ export function About() {
 
           {/* Title */}
           <motion.h2
-            className="mb-6 font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
+            className={cn(
+              'mb-6',
+              'font-display text-4xl font-light leading-tight tracking-tight',
+              'md:text-6xl',
+            )}
             variants={itemVariants}
           >
             Building Wealth with Purpose
@@ -193,7 +208,11 @@ export function About() {
 
           {/* Description */}
           <motion.p
-            className="mb-12 text-lg leading-7 text-muted-foreground md:mb-16"
+            className={cn(
+              'mb-12',
+              'text-lg leading-7 text-muted-foreground',
+              'md:mb-16',
+            )}
             variants={itemVariants}
           >
             A finance executive driven by strategy and results. Focused on
@@ -203,7 +222,7 @@ export function About() {
 
           {/* Stats */}
           <motion.div
-            className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-6"
+            className={cn('grid grid-cols-1 gap-8', 'sm:grid-cols-3 md:gap-6')}
             variants={containerVariants}
           >
             {stats.map((stat, index) => (

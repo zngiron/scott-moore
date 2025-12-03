@@ -16,17 +16,37 @@ export function useActiveSection() {
   const [activeSection, setActiveSection] = useState<string>('hero');
 
   useEffect(() => {
+    const visibleSections = new Map<string, number>();
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
+          const id = entry.target.id;
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id || 'hero');
+            visibleSections.set(id, entry.intersectionRatio);
+          } else {
+            visibleSections.delete(id);
+          }
+        }
+
+        // Find the section that appears first in the DOM order among visible ones
+        if (visibleSections.size > 0) {
+          for (const sectionId of sections) {
+            if (visibleSections.has(sectionId)) {
+              setActiveSection(sectionId);
+              break;
+            }
           }
         }
       },
       {
-        threshold: 0.5,
-        rootMargin: '-10% 0px -10% 0px',
+        threshold: [
+          0,
+          0.1,
+          0.25,
+          0.5,
+        ],
+        rootMargin: '-80px 0px -40% 0px',
       },
     );
 

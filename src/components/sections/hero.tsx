@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'motion/react';
 
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const containerVariants = {
   hidden: {
@@ -43,11 +44,16 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-dvh flex-col justify-center overflow-hidden md:snap-start"
+      className={cn(
+        'overflow-hidden',
+        'relative',
+        'flex min-h-dvh flex-col justify-center',
+        'md:snap-start',
+      )}
     >
       {/* Content */}
       <motion.div
-        className="relative z-10 px-6 py-24 md:px-36 md:py-32"
+        className={cn('relative z-10', 'px-6 py-24', 'lg:px-36 lg:py-32')}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -61,7 +67,11 @@ export function Hero() {
           </motion.p>
 
           <motion.h1
-            className="mb-8 font-display text-7xl font-light leading-none tracking-tighter md:text-9xl"
+            className={cn(
+              'mb-8',
+              'font-display text-7xl font-light leading-none tracking-tighter',
+              'md:text-9xl',
+            )}
             variants={itemVariants}
           >
             <span className="block">Scott</span>
