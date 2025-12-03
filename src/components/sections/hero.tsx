@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { motion } from 'motion/react';
 
-import { WaveFractal } from '@/components/effects/wave-fractal';
 import { Button } from '@/components/ui/button';
 
 const containerVariants = {
@@ -42,29 +41,27 @@ const itemVariants = {
 
 export function Hero() {
   return (
-    <section className="relative h-dvh overflow-hidden">
-      {/* Fractal Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <WaveFractal className="absolute inset-0 opacity-60" />
-      </div>
-
+    <section
+      id="hero"
+      className="relative flex min-h-dvh snap-start flex-col justify-center overflow-hidden"
+    >
       {/* Content */}
       <motion.div
-        className="relative z-10 flex flex-col justify-center h-full px-6 md:px-36 pt-20 pb-12"
+        className="relative z-10 px-6 py-24 md:px-36 md:py-32"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <div className="max-w-xl">
           <motion.p
-            className="text-xl uppercase tracking-widest text-stone-500 mb-6"
+            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
             variants={itemVariants}
           >
             Finance Executive
           </motion.p>
 
           <motion.h1
-            className="font-display font-light text-7xl md:text-9xl tracking-tighter leading-none mb-8"
+            className="mb-8 font-display text-7xl font-light leading-none tracking-tighter md:text-9xl"
             variants={itemVariants}
           >
             <span className="block">Scott</span>
@@ -72,7 +69,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            className="text-lg text-stone-500 leading-7 max-w-md mb-10"
+            className="mb-10 max-w-md text-lg leading-7 text-stone-500"
             variants={itemVariants}
           >
             Experienced finance executive helping individuals and businesses

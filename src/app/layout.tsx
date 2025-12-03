@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 
 import { Inter, Space_Grotesk } from 'next/font/google';
 
-import { Footer } from '@/components/layout/footer';
+import { Background } from '@/components/layout/background';
 import { Header } from '@/components/layout/header';
 import { Providers } from '@/components/layout/providers';
 import { Scripts } from '@/components/layout/scripts';
@@ -80,15 +80,15 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     >
       <body
         className={cn(
-          'overflow-x-hidden touch-pan-y scroll-smooth',
-          'flex flex-col min-h-dvh',
-          'font-sans antialiased',
+          'overflow-x-hidden touch-pan-y',
+          'bg-stone-50 font-sans antialiased',
+          'snap-y snap-mandatory overflow-y-scroll scroll-smooth scrollbar-hide',
         )}
       >
         <Providers>
+          <Background />
           <Header />
-          <main className="grow">{children}</main>
-          <Footer />
+          <main className="relative z-10">{children}</main>
           <Scripts />
         </Providers>
       </body>

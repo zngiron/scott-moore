@@ -1,3 +1,5 @@
+import careerData from './career.json';
+
 export type CareerItem = {
   year: string;
   position: string;
@@ -5,36 +7,4 @@ export type CareerItem = {
   description: string;
 };
 
-export const careerItems: CareerItem[] = [
-  {
-    year: '2012 - 2015',
-    position: 'Director',
-    company: 'FTSE 500 Company',
-    description: 'Business Development in emerging markets. Top 1% performer.',
-  },
-  {
-    year: '2016 - 2017',
-    position: 'Manager - Client Advisor',
-    company: 'Henley & Partners',
-    description: 'Specialized in alternative residence solutions.',
-  },
-  {
-    year: '2018 - 2019',
-    position: 'Associate Director',
-    company: 'Henley & Partners',
-    description: 'Managed cross-border investment programs.',
-  },
-  {
-    year: '2019 - 2021',
-    position: 'Director',
-    company: 'Henley & Partners',
-    description: 'Directed regional operations for high-net-worth individuals.',
-  },
-  {
-    year: '2021 - Present',
-    position: 'Managing Director',
-    company: 'Henley & Partners',
-    description:
-      'Leading global citizenship and investment migration strategies.',
-  },
-];
+export const careerItems: CareerItem[] = careerData;

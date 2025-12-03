@@ -3,6 +3,7 @@
 import type { InsightArticle } from '@/data/insights';
 
 import { motion } from 'motion/react';
+import { useState } from 'react';
 
 import { insightArticles } from '@/data/insights';
 
@@ -29,36 +30,65 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.25, 0.4, 0.25, 1] as const,
+      ease: [
+        0.25,
+        0.4,
+        0.25,
+        1,
+      ] as const,
     },
   },
 };
 
 function ArticleCard({ article }: { article: InsightArticle }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.a
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
       variants={itemVariants}
-      className="group flex flex-col rounded-2xl border border-stone-300 bg-white transition-colors hover:border-stone-400 hover:bg-stone-50"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group flex h-64 flex-col justify-between rounded-2xl border border-stone-300 bg-white p-6 transition-colors hover:border-stone-400 hover:bg-stone-50"
     >
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-2 p-6">
+      <div className="flex flex-col gap-2">
         <p className="text-sm leading-5 text-stone-500">
           {article.category} · {article.date} · {article.source}
         </p>
-        <h3 className="font-display text-4xl font-light leading-10 text-black">
+        <h3 className="font-display text-xl font-light leading-7 text-black">
           {article.title}
         </h3>
-        <p className="text-base leading-6 text-stone-500">
+        <p className="line-clamp-2 text-sm leading-5 text-stone-500">
           {article.description}
         </p>
       </div>
 
       {/* Footer */}
-      <div className="px-6 pb-6">
-        <span className="text-sm font-medium underline">Read Article</span>
+      <div>
+        <span className="relative text-sm font-medium">
+          Read Article
+          <motion.span
+            className="absolute -bottom-1 left-0 h-px bg-current"
+            initial={{
+              width: 0,
+            }}
+            animate={{
+              width: isHovered ? '100%' : 0,
+            }}
+            transition={{
+              duration: 0.3,
+              ease: [
+                0.25,
+                0.4,
+                0.25,
+                1,
+              ],
+            }}
+          />
+        </span>
       </div>
     </motion.a>
   );
@@ -66,9 +96,12 @@ function ArticleCard({ article }: { article: InsightArticle }) {
 
 export function Insights() {
   return (
-    <section className="bg-stone-100 py-24 md:py-32">
+    <section
+      id="insights"
+      className="flex min-h-dvh snap-start flex-col justify-center bg-stone-100"
+    >
       <motion.div
-        className="px-6 md:px-36"
+        className="px-6 py-24 md:px-36 md:py-32"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -80,30 +113,32 @@ export function Insights() {
         {/* Header */}
         <div className="mb-12 flex flex-col gap-6 md:mb-16">
           <motion.p
-            className="text-xl uppercase leading-7 tracking-widest text-stone-500"
+            className="text-xl uppercase tracking-widest text-stone-500"
             variants={itemVariants}
           >
             Insights
           </motion.p>
           <motion.h2
-            className="font-display text-5xl font-light leading-tight tracking-tight md:text-6xl"
+            className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
             variants={itemVariants}
           >
             Insights That Drive Strategy
           </motion.h2>
         </div>
 
-        {/* Grid */}
+        {/* Grid - 3 columns on larger screens */}
         <motion.div
-          className="grid grid-cols-1 gap-6 md:grid-cols-2"
+          className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
           variants={containerVariants}
         >
           {insightArticles.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+            <ArticleCard
+              key={article.id}
+              article={article}
+            />
           ))}
         </motion.div>
       </motion.div>
     </section>
   );
 }
-

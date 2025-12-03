@@ -1,70 +1,167 @@
+'use client';
+
+import { motion } from 'motion/react';
+import { useState } from 'react';
+
+function AnimatedLink({
+  href,
+  children,
+  external = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  external?: boolean;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      className="relative inline-block w-fit text-sm leading-5"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {children}
+      <motion.span
+        className="absolute -bottom-1 left-0 h-px bg-white"
+        initial={{
+          width: 0,
+        }}
+        animate={{
+          width: isHovered ? '100%' : 0,
+        }}
+        transition={{
+          duration: 0.3,
+          ease: [
+            0.25,
+            0.4,
+            0.25,
+            1,
+          ],
+        }}
+      />
+    </a>
+  );
+}
+
+const containerVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [
+        0.25,
+        0.4,
+        0.25,
+        1,
+      ] as const,
+    },
+  },
+};
+
 export function Footer() {
   return (
-    <footer className="relative min-h-[600px] overflow-hidden bg-black">
-      {/* Decorative Circle */}
-      <div className="pointer-events-none absolute -left-32 top-80 size-[800px]">
-        <svg
-          className="size-full"
-          viewBox="0 0 800 800"
-          fill="none"
-          preserveAspectRatio="none"
-        >
-          <circle
-            cx="400"
-            cy="400"
-            r="399"
-            stroke="#d6d3d1"
-            strokeWidth="2"
-          />
-        </svg>
-      </div>
-
+    <footer
+      id="contact"
+      className="relative snap-start overflow-hidden bg-black py-24 md:py-32"
+    >
       {/* Content */}
-      <div className="relative flex min-h-[500px] items-center px-6 py-24 md:px-36">
+      <motion.div
+        className="relative px-6 md:px-36"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+      >
         <div className="flex w-full flex-col justify-between gap-12 lg:flex-row lg:items-start">
           {/* Left - Title */}
-          <h2 className="font-display text-5xl font-light leading-tight text-stone-50 md:text-6xl">
+          <motion.h2
+            className="font-display text-4xl font-light leading-tight text-stone-50 md:text-6xl"
+            variants={itemVariants}
+          >
             Contact
-          </h2>
+          </motion.h2>
 
           {/* Right - Content */}
           <div className="flex max-w-xl flex-col gap-6">
-            <p className="text-lg leading-7 text-white">
+            <motion.p
+              className="text-lg leading-7 text-white"
+              variants={itemVariants}
+            >
               Let's discuss how we can optimize your financial strategy and
               preserve your wealth for generations to come.
-            </p>
+            </motion.p>
 
             {/* Email */}
-            <div className="flex flex-col text-white">
-              <span className="text-sm leading-5">Email</span>
-              <a
-                href="mailto:hi@scottmoore.com"
-                className="text-sm leading-5 underline transition-opacity hover:opacity-80"
-              >
+            <motion.div
+              className="flex flex-col gap-1 text-white"
+              variants={itemVariants}
+            >
+              <span className="text-sm leading-5 text-stone-400">Email</span>
+              <AnimatedLink href="mailto:hi@scottmoore.com">
                 hi@scottmoore.com
-              </a>
-            </div>
+              </AnimatedLink>
+            </motion.div>
 
             {/* LinkedIn */}
-            <div className="flex flex-col text-white">
-              <span className="text-sm leading-5">LinkedIn</span>
-              <a
+            <motion.div
+              className="flex flex-col gap-1 text-white"
+              variants={itemVariants}
+            >
+              <span className="text-sm leading-5 text-stone-400">LinkedIn</span>
+              <AnimatedLink
                 href="https://www.linkedin.com/in/scott-moore-78023a20"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm leading-5 underline transition-opacity hover:opacity-80"
+                external
               >
                 linkedin/in/scott-moore-78023a20
-              </a>
-            </div>
+              </AnimatedLink>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Copyright */}
-      <p className="absolute bottom-8 left-6 text-sm text-white md:left-36">
+      <motion.p
+        className="mt-16 px-6 text-sm text-stone-400 md:px-36"
+        initial={{
+          opacity: 0,
+        }}
+        whileInView={{
+          opacity: 1,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.5,
+        }}
+      >
         © 2025 Scott Moore. All rights reserved.
-      </p>
+      </motion.p>
     </footer>
   );
 }

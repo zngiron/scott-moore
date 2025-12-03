@@ -1,3 +1,4 @@
+import { Footer } from '@/components/layout/footer';
 import { About } from '@/components/sections/about';
 import { Career } from '@/components/sections/career';
 import { Expertise } from '@/components/sections/expertise';
@@ -14,6 +15,7 @@ export default function Page(_: PageProps<'/'>) {
       <Career />
       <Interviews />
       <Insights />
+      <Footer />
     </>
   );
 }

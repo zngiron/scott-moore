@@ -104,9 +104,12 @@ const cardVariants = {
 
 export function Expertise() {
   return (
-    <section className="bg-stone-50 py-24 md:py-32">
+    <section
+      id="expertise"
+      className="flex min-h-dvh snap-start flex-col justify-center bg-stone-50"
+    >
       <motion.div
-        className="px-6 md:px-36"
+        className="px-6 py-24 md:px-36 md:py-32"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -116,16 +119,16 @@ export function Expertise() {
         }}
       >
         {/* Section Header */}
-        <div className="mb-16 md:mb-20">
+        <div className="mb-12 md:mb-16">
           <motion.p
-            className="text-sm uppercase tracking-widest text-stone-500 mb-6"
+            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
             variants={itemVariants}
           >
             Expertise
           </motion.p>
 
           <motion.h2
-            className="font-display font-light text-5xl md:text-7xl tracking-tighter leading-[1.1]"
+            className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
             variants={itemVariants}
           >
             Where Strategy
@@ -136,23 +139,23 @@ export function Expertise() {
 
         {/* Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+          className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3"
           variants={containerVariants}
         >
           {expertiseItems.map((item) => (
             <motion.div
               key={item.title}
-              className="group bg-white rounded-xl border border-stone-200 p-6 md:p-8 transition-colors hover:bg-stone-50 hover:border-stone-300"
+              className="group rounded-xl border border-stone-200 bg-white p-6 transition-colors hover:border-stone-300 hover:bg-stone-50 md:p-8"
               variants={cardVariants}
             >
               <item.icon
-                className="w-7 h-7 text-stone-700 mb-5 transition-transform group-hover:scale-110"
+                className="mb-5 size-7 text-stone-700 transition-transform group-hover:scale-110"
                 strokeWidth={1.5}
               />
-              <h3 className="font-display font-semibold text-lg mb-3">
+              <h3 className="mb-3 font-display text-lg font-semibold">
                 {item.title}
               </h3>
-              <p className="text-stone-500 text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed text-stone-500">
                 {item.description}
               </p>
             </motion.div>

@@ -6,7 +6,6 @@ import { Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 
-import { WaveFractal } from '@/components/effects/wave-fractal';
 import {
   Dialog,
   DialogContent,
@@ -69,11 +68,11 @@ function InterviewCard({
       type="button"
       variants={itemVariants}
       onClick={handleClick}
-      className="group flex min-h-[420px] w-[320px] shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-stone-300 bg-white p-6 text-left transition-colors hover:border-stone-400 hover:bg-stone-50 md:w-[368px]"
+      className="group flex h-96 w-80 shrink-0 cursor-pointer snap-start flex-col gap-2.5 rounded-2xl border border-stone-300 bg-white p-6 text-left transition-colors hover:border-stone-400 hover:bg-stone-50 md:w-[368px]"
     >
       {/* Thumbnail */}
-      <div className="flex h-[180px] w-full items-center justify-center rounded-lg bg-black/5">
-        <Play className="size-12 stroke-stone-900 stroke-[1.5] fill-none transition-transform group-hover:scale-110" />
+      <div className="flex h-44 w-full items-center justify-center rounded-lg bg-black/5">
+        <Play className="size-12 fill-none stroke-stone-900 stroke-[1.5] transition-transform group-hover:scale-110" />
       </div>
 
       {/* Content */}
@@ -81,10 +80,10 @@ function InterviewCard({
         <p className="text-sm leading-5 text-stone-500">
           {interview.source} · {interview.year}
         </p>
-        <h3 className="min-h-14 font-display text-xl leading-7 text-black">
+        <h3 className="font-display text-xl leading-7 text-black">
           {interview.title}
         </h3>
-        <p className="text-base leading-6 text-stone-500">
+        <p className="line-clamp-2 text-base leading-6 text-stone-500">
           {interview.description}
         </p>
       </div>
@@ -98,15 +97,13 @@ export function Interviews() {
   );
 
   return (
-    <section className="relative min-h-[800px] overflow-hidden py-24 md:py-32">
-      {/* WaveFractal Background */}
-      <div className="pointer-events-none absolute inset-0">
-        <WaveFractal className="absolute inset-0 opacity-40" />
-      </div>
-
+    <section
+      id="interviews"
+      className="relative flex min-h-dvh snap-start flex-col justify-center overflow-hidden bg-stone-50"
+    >
       {/* Content */}
       <motion.div
-        className="relative z-10"
+        className="relative z-10 py-24 md:py-32"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -118,13 +115,13 @@ export function Interviews() {
         {/* Header */}
         <div className="mb-12 px-6 md:mb-16 md:px-36">
           <motion.p
-            className="mb-6 text-xl uppercase leading-7 tracking-widest text-stone-500"
+            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
             variants={itemVariants}
           >
             Interviews
           </motion.p>
           <motion.h2
-            className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl md:leading-[60px]"
+            className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
             variants={itemVariants}
           >
             Thoughts That
@@ -135,7 +132,7 @@ export function Interviews() {
 
         {/* Scrollable Cards */}
         <motion.div
-          className="flex gap-6 overflow-x-auto px-6 pb-4 snap-x snap-mandatory scrollbar-hide md:px-36"
+          className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 md:px-36"
           variants={itemVariants}
         >
           {interviews.map((interview) => (

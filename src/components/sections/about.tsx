@@ -1,9 +1,7 @@
 'use client';
 
-import { motion, useInView } from 'motion/react';
+import { animate, motion, useInView } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
-
-import { CircleFractal } from '@/components/effects/circle-fractal';
 
 interface StatProps {
   value: string;
@@ -26,25 +24,18 @@ function AnimatedStat({ value, label, prefix = '', suffix = '' }: StatProps) {
   useEffect(() => {
     if (!isInView) return;
 
-    const duration = 2000;
-    const startTime = performance.now();
+    const controls = animate(0, numericValue, {
+      duration: 2,
+      ease: [
+        0.25,
+        0.4,
+        0.25,
+        1,
+      ],
+      onUpdate: (latest) => setDisplayValue(Math.floor(latest)),
+    });
 
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - (1 - progress) ** 4;
-      const currentValue = Math.floor(easeOutQuart * numericValue);
-
-      setDisplayValue(currentValue);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
+    return () => controls.stop();
   }, [
     isInView,
     numericValue,
@@ -55,12 +46,61 @@ function AnimatedStat({ value, label, prefix = '', suffix = '' }: StatProps) {
       ref={ref}
       className="flex flex-col gap-2"
     >
-      <p className="font-display font-light text-5xl md:text-6xl leading-tight tracking-normal">
+      <motion.p
+        className="font-display text-4xl font-light leading-tight tracking-tight md:text-5xl"
+        initial={{
+          opacity: 0,
+          y: 20,
+        }}
+        animate={
+          isInView
+            ? {
+                opacity: 1,
+                y: 0,
+              }
+            : {}
+        }
+        transition={{
+          duration: 0.6,
+          ease: [
+            0.25,
+            0.4,
+            0.25,
+            1,
+          ],
+        }}
+      >
         {prefix}
         {displayValue}
         {suffix}
-      </p>
-      <p className="text-base text-stone-500 leading-6">{label}</p>
+      </motion.p>
+      <motion.p
+        className="text-base leading-6 text-stone-500"
+        initial={{
+          opacity: 0,
+          y: 10,
+        }}
+        animate={
+          isInView
+            ? {
+                opacity: 1,
+                y: 0,
+              }
+            : {}
+        }
+        transition={{
+          duration: 0.6,
+          delay: 0.2,
+          ease: [
+            0.25,
+            0.4,
+            0.25,
+            1,
+          ],
+        }}
+      >
+        {label}
+      </motion.p>
     </div>
   );
 }
@@ -119,15 +159,13 @@ const itemVariants = {
 
 export function About() {
   return (
-    <section className="relative min-h-[600px] md:min-h-[768px] bg-stone-100 overflow-hidden">
-      {/* Circle Fractal Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <CircleFractal className="absolute inset-0 opacity-80" />
-      </div>
-
+    <section
+      id="about"
+      className="relative flex min-h-dvh snap-start flex-col justify-center overflow-hidden bg-stone-100"
+    >
       {/* Content */}
       <motion.div
-        className="relative z-10 px-6 md:px-36 py-24 md:py-32"
+        className="relative z-10 px-6 py-24 md:px-36 md:py-32"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -136,10 +174,10 @@ export function About() {
           amount: 0.2,
         }}
       >
-        <div className="max-w-xl ml-auto">
+        <div className="ml-auto max-w-xl">
           {/* Header */}
           <motion.p
-            className="text-xl uppercase tracking-widest text-stone-500 mb-6"
+            className="mb-6 text-xl uppercase tracking-widest text-stone-500"
             variants={itemVariants}
           >
             About
@@ -147,7 +185,7 @@ export function About() {
 
           {/* Title */}
           <motion.h2
-            className="font-display font-light text-5xl md:text-6xl leading-tight tracking-normal mb-6"
+            className="mb-6 font-display text-4xl font-light leading-tight tracking-tight md:text-6xl"
             variants={itemVariants}
           >
             Building Wealth with Purpose
@@ -155,7 +193,7 @@ export function About() {
 
           {/* Description */}
           <motion.p
-            className="text-lg text-stone-500 leading-7 mb-16 md:mb-24"
+            className="mb-12 text-lg leading-7 text-stone-500 md:mb-16"
             variants={itemVariants}
           >
             A finance executive driven by strategy and results. Focused on
@@ -165,13 +203,14 @@ export function About() {
 
           {/* Stats */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-6"
+            className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:gap-6"
             variants={containerVariants}
           >
-            {stats.map((stat) => (
+            {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 variants={itemVariants}
+                custom={index}
               >
                 <AnimatedStat {...stat} />
               </motion.div>

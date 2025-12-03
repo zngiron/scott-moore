@@ -36,12 +36,12 @@ function TimelineItem({
   const contentVisible = itemProgress > 0.3;
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       {/* Year Row */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
         {/* Circle */}
         <motion.div
-          className="size-[10px] rounded-full bg-black shrink-0"
+          className="size-2.5 shrink-0 rounded-full bg-black"
           animate={{
             scale: bulletVisible ? 1 : 0,
             opacity: bulletVisible ? 1 : 0,
@@ -58,7 +58,7 @@ function TimelineItem({
         />
         {/* Year */}
         <motion.p
-          className="text-stone-500 text-base"
+          className="text-sm text-stone-500"
           animate={{
             opacity: bulletVisible ? 1 : 0,
             x: bulletVisible ? 0 : -10,
@@ -78,12 +78,12 @@ function TimelineItem({
       </div>
 
       {/* Content Row */}
-      <div className="flex gap-6">
+      <div className="flex gap-4">
         {/* Line Container */}
-        <div className="flex items-center justify-center w-[10px] shrink-0">
+        <div className="flex w-2.5 shrink-0 items-center justify-center">
           {!isLast && (
             <motion.div
-              className="w-[2px] bg-stone-300 origin-top"
+              className="w-0.5 origin-top bg-stone-300"
               style={{
                 height: '100%',
               }}
@@ -100,7 +100,7 @@ function TimelineItem({
 
         {/* Text Content */}
         <motion.div
-          className="flex flex-col pb-6"
+          className="flex flex-col pb-4"
           animate={{
             opacity: contentVisible ? 1 : 0,
             y: contentVisible ? 0 : 10,
@@ -115,70 +115,14 @@ function TimelineItem({
             ],
           }}
         >
-          <p className="font-display text-xl text-black leading-7">
+          <p className="font-display text-lg leading-6 text-black">
             {item.position}
           </p>
-          <p className="text-stone-500 text-base leading-6">{item.company}</p>
-          <p className="text-stone-500 text-base leading-6">
-            {item.description}
-          </p>
+          <p className="text-sm leading-5 text-stone-500">{item.company}</p>
+          <p className="text-sm leading-5 text-stone-500">{item.description}</p>
         </motion.div>
       </div>
     </div>
-  );
-}
-
-export function Career() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: [
-      'start start',
-      'end end',
-    ],
-  });
-
-  return (
-    <section
-      ref={sectionRef}
-      className="bg-stone-100 relative"
-      // Height = viewport + extra scroll space for each item
-      style={{
-        height: `${100 + careerItems.length * 50}vh`,
-      }}
-    >
-      {/* Sticky container */}
-      <div className="sticky top-0 h-dvh flex items-center">
-        <div className="px-6 md:px-36 w-full">
-          {/* Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
-            {/* Left Column - Header */}
-            <div className="flex flex-col gap-6">
-              <p className="text-xl uppercase tracking-widest text-stone-500">
-                Career
-              </p>
-
-              <h2 className="font-display font-light text-5xl md:text-6xl tracking-tight leading-[1.1]">
-                A Journey Built on Financial Leadership
-              </h2>
-            </div>
-
-            {/* Right Column - Timeline */}
-            <div className="flex flex-col gap-6">
-              {careerItems.map((item, index) => (
-                <TimelineItemWrapper
-                  key={`${item.year}-${item.position}`}
-                  item={item}
-                  index={index}
-                  isLast={index === careerItems.length - 1}
-                  scrollProgress={scrollYProgress}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -230,5 +174,60 @@ function TimelineItemWithProgress({
       isLast={isLast}
       progress={progress}
     />
+  );
+}
+
+export function Career() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: [
+      'start start',
+      'end end',
+    ],
+  });
+
+  return (
+    <section
+      ref={sectionRef}
+      id="career"
+      className="relative snap-start bg-stone-100"
+      // Height = viewport + extra scroll space for each item
+      style={{
+        height: `${100 + careerItems.length * 50}vh`,
+      }}
+    >
+      {/* Sticky container */}
+      <div className="sticky top-0 flex h-dvh items-center">
+        <div className="w-full px-6 md:px-36">
+          {/* Two Column Layout */}
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
+            {/* Left Column - Header */}
+            <div className="flex flex-col gap-6">
+              <p className="text-xl uppercase tracking-widest text-stone-500">
+                Career
+              </p>
+
+              <h2 className="font-display text-4xl font-light leading-tight tracking-tight md:text-6xl">
+                A Journey Built on Financial Leadership
+              </h2>
+            </div>
+
+            {/* Right Column - Timeline */}
+            <div className="flex flex-col">
+              {careerItems.map((item, index) => (
+                <TimelineItemWrapper
+                  key={`${item.year}-${item.position}`}
+                  item={item}
+                  index={index}
+                  isLast={index === careerItems.length - 1}
+                  scrollProgress={scrollYProgress}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
