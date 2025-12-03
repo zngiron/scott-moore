@@ -43,7 +43,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-dvh snap-start flex-col justify-center overflow-hidden"
+      className="relative flex min-h-dvh flex-col justify-center overflow-hidden md:snap-start"
     >
       {/* Content */}
       <motion.div

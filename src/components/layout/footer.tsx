@@ -83,7 +83,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative snap-start overflow-hidden bg-black py-24 md:py-32"
+      className="relative overflow-hidden bg-black py-24 md:snap-start md:py-32"
     >
       {/* Content */}
       <motion.div

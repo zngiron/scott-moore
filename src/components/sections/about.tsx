@@ -161,7 +161,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative flex min-h-dvh snap-start flex-col justify-center overflow-hidden bg-stone-100"
+      className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-stone-100 md:snap-start"
     >
       {/* Content */}
       <motion.div

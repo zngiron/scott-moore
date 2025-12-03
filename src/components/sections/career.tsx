@@ -3,37 +3,63 @@
 import type { MotionValue } from 'motion/react';
 import type { CareerItem } from '@/data/career';
 
-import { motion, useScroll } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { useRef } from 'react';
 
 import { careerItems } from '@/data/career';
 
+// Optimized timeline item using CSS transforms instead of React state
 function TimelineItem({
   item,
   isLast,
   index,
-  progress,
+  scrollProgress,
 }: {
   item: CareerItem;
   isLast: boolean;
   index: number;
-  progress: number;
+  scrollProgress: MotionValue<number>;
 }) {
-  // Each item gets a portion of the scroll (0-1 divided by number of items)
   const itemCount = careerItems.length;
   const itemStart = index / itemCount;
   const itemEnd = (index + 1) / itemCount;
 
-  // Calculate visibility for this item (0 to 1)
-  const itemProgress = Math.max(
-    0,
-    Math.min(1, (progress - itemStart) / (itemEnd - itemStart)),
+  // Use transforms directly on motion values - no React re-renders!
+  const bulletScale = useTransform(
+    scrollProgress,
+    [itemStart, itemStart + 0.01],
+    [0, 1],
   );
-
-  // Sub-animations within item progress
-  const bulletVisible = itemProgress > 0;
-  const lineProgress = Math.max(0, Math.min(1, (itemProgress - 0.2) / 0.5));
-  const contentVisible = itemProgress > 0.3;
+  const bulletOpacity = useTransform(
+    scrollProgress,
+    [itemStart, itemStart + 0.01],
+    [0, 1],
+  );
+  const yearOpacity = useTransform(
+    scrollProgress,
+    [itemStart, itemStart + 0.02],
+    [0, 1],
+  );
+  const yearX = useTransform(
+    scrollProgress,
+    [itemStart, itemStart + 0.02],
+    [-10, 0],
+  );
+  const lineScaleY = useTransform(
+    scrollProgress,
+    [itemStart + (itemEnd - itemStart) * 0.2, itemStart + (itemEnd - itemStart) * 0.7],
+    [0, 1],
+  );
+  const contentOpacity = useTransform(
+    scrollProgress,
+    [itemStart + (itemEnd - itemStart) * 0.3, itemStart + (itemEnd - itemStart) * 0.5],
+    [0, 1],
+  );
+  const contentY = useTransform(
+    scrollProgress,
+    [itemStart + (itemEnd - itemStart) * 0.3, itemStart + (itemEnd - itemStart) * 0.5],
+    [10, 0],
+  );
 
   return (
     <div className="flex w-full flex-col">
@@ -41,36 +67,18 @@ function TimelineItem({
       <div className="flex items-center gap-4">
         {/* Circle */}
         <motion.div
-          className="size-2.5 shrink-0 rounded-full bg-black"
-          animate={{
-            scale: bulletVisible ? 1 : 0,
-            opacity: bulletVisible ? 1 : 0,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: [
-              0.25,
-              0.4,
-              0.25,
-              1,
-            ],
+          className="size-2.5 shrink-0 rounded-full bg-black will-change-transform"
+          style={{
+            scale: bulletScale,
+            opacity: bulletOpacity,
           }}
         />
         {/* Year */}
         <motion.p
-          className="text-sm text-stone-500"
-          animate={{
-            opacity: bulletVisible ? 1 : 0,
-            x: bulletVisible ? 0 : -10,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: [
-              0.25,
-              0.4,
-              0.25,
-              1,
-            ],
+          className="text-sm text-stone-500 will-change-transform"
+          style={{
+            opacity: yearOpacity,
+            x: yearX,
           }}
         >
           {item.year}
@@ -83,16 +91,9 @@ function TimelineItem({
         <div className="flex w-2.5 shrink-0 items-center justify-center">
           {!isLast && (
             <motion.div
-              className="w-0.5 origin-top bg-stone-300"
+              className="h-full w-0.5 origin-top bg-stone-300 will-change-transform"
               style={{
-                height: '100%',
-              }}
-              animate={{
-                scaleY: lineProgress,
-              }}
-              transition={{
-                duration: 0.1,
-                ease: 'linear',
+                scaleY: lineScaleY,
               }}
             />
           )}
@@ -100,19 +101,10 @@ function TimelineItem({
 
         {/* Text Content */}
         <motion.div
-          className="flex flex-col pb-4"
-          animate={{
-            opacity: contentVisible ? 1 : 0,
-            y: contentVisible ? 0 : 10,
-          }}
-          transition={{
-            duration: 0.3,
-            ease: [
-              0.25,
-              0.4,
-              0.25,
-              1,
-            ],
+          className="flex flex-col pb-4 will-change-transform"
+          style={{
+            opacity: contentOpacity,
+            y: contentY,
           }}
         >
           <p className="font-display text-lg leading-6 text-black">
@@ -126,75 +118,21 @@ function TimelineItem({
   );
 }
 
-// Wrapper to subscribe to motion value
-function TimelineItemWrapper({
-  item,
-  index,
-  isLast,
-  scrollProgress,
-}: {
-  item: CareerItem;
-  index: number;
-  isLast: boolean;
-  scrollProgress: MotionValue<number>;
-}) {
-  return (
-    <TimelineItemWithProgress
-      item={item}
-      index={index}
-      isLast={isLast}
-      progressValue={scrollProgress}
-    />
-  );
-}
-
-function TimelineItemWithProgress({
-  item,
-  index,
-  isLast,
-  progressValue,
-}: {
-  item: CareerItem;
-  index: number;
-  isLast: boolean;
-  progressValue: MotionValue<number>;
-}) {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    return progressValue.on('change', (v) => setProgress(v));
-  }, [
-    progressValue,
-  ]);
-
-  return (
-    <TimelineItem
-      item={item}
-      index={index}
-      isLast={isLast}
-      progress={progress}
-    />
-  );
-}
-
 export function Career() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: [
-      'start start',
-      'end end',
-    ],
+    offset: ['start start', 'end end'],
   });
 
   return (
     <section
       ref={sectionRef}
       id="career"
-      className="relative snap-start bg-stone-100"
-      // Height = viewport + extra scroll space for each item
+      className="relative bg-stone-100 md:snap-start"
+      // Reduced height for better mobile UX
       style={{
-        height: `${100 + careerItems.length * 50}vh`,
+        height: `${100 + careerItems.length * 40}vh`,
       }}
     >
       {/* Sticky container */}
@@ -216,7 +154,7 @@ export function Career() {
             {/* Right Column - Timeline */}
             <div className="flex flex-col">
               {careerItems.map((item, index) => (
-                <TimelineItemWrapper
+                <TimelineItem
                   key={`${item.year}-${item.position}`}
                   item={item}
                   index={index}

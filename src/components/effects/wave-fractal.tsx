@@ -1,9 +1,55 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface WaveFractalProps {
   className?: string;
+}
+
+// Check if device prefers reduced motion or is mobile
+function useOptimizedRendering() {
+  const [config, setConfig] = useState({
+    lineCount: 20,
+    stepSize: 6,
+    enabled: true,
+    frameSkip: 2,
+  });
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    // Simple mobile detection based on screen size and touch
+    const isMobile = window.innerWidth < 768 || 'ontouchstart' in window;
+
+    if (prefersReducedMotion) {
+      setConfig({
+        lineCount: 0,
+        stepSize: 10,
+        enabled: false,
+        frameSkip: 1,
+      });
+    } else if (isMobile) {
+      // Significantly reduced for mobile: fewer lines, bigger steps, skip frames
+      setConfig({
+        lineCount: 12,
+        stepSize: 8,
+        enabled: true,
+        frameSkip: 3, // Only render every 3rd frame
+      });
+    } else {
+      // Desktop: full quality
+      setConfig({
+        lineCount: 30,
+        stepSize: 4,
+        enabled: true,
+        frameSkip: 1,
+      });
+    }
+  }, []);
+
+  return config;
 }
 
 export function WaveFractal({ className }: WaveFractalProps) {
@@ -13,6 +59,9 @@ export function WaveFractal({ className }: WaveFractalProps) {
     y: 0,
   });
   const animationRef = useRef<number>(0);
+  const frameCountRef = useRef(0);
+
+  const { lineCount, stepSize, enabled, frameSkip } = useOptimizedRendering();
 
   const draw = useCallback(
     (
@@ -23,10 +72,11 @@ export function WaveFractal({ className }: WaveFractalProps) {
     ) => {
       ctx.clearRect(0, 0, width, height);
 
+      if (lineCount === 0) return;
+
       const mouseX = mouseRef.current.x;
       const mouseY = mouseRef.current.y;
 
-      const lineCount = 40;
       const baseAmplitude = height * 0.15;
       const baseFrequency = 0.003;
 
@@ -42,7 +92,7 @@ export function WaveFractal({ className }: WaveFractalProps) {
         ctx.strokeStyle = `rgba(168, 162, 158, ${opacity})`;
         ctx.lineWidth = 1;
 
-        for (let x = 0; x <= width; x += 3) {
+        for (let x = 0; x <= width; x += stepSize) {
           const dx = x - mouseX;
           const dy = yOffset - mouseY;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -69,10 +119,15 @@ export function WaveFractal({ className }: WaveFractalProps) {
         ctx.stroke();
       }
     },
-    [],
+    [
+      lineCount,
+      stepSize,
+    ],
   );
 
   useEffect(() => {
+    if (!enabled) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -81,7 +136,11 @@ export function WaveFractal({ className }: WaveFractalProps) {
 
     const updateSize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      // Use lower DPR on mobile for better performance
+      const isMobile = window.innerWidth < 768;
+      const dpr = isMobile
+        ? Math.min(window.devicePixelRatio, 1.5)
+        : window.devicePixelRatio || 1;
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
@@ -95,7 +154,13 @@ export function WaveFractal({ className }: WaveFractalProps) {
       };
     };
 
+    // Throttled touch handler for mobile
+    let lastTouchTime = 0;
     const handleTouchMove = (e: TouchEvent) => {
+      const now = performance.now();
+      if (now - lastTouchTime < 50) return; // Max 20fps for touch updates
+      lastTouchTime = now;
+
       const rect = canvas.getBoundingClientRect();
       const touch = e.touches[0];
       if (touch) {
@@ -107,8 +172,14 @@ export function WaveFractal({ className }: WaveFractalProps) {
     };
 
     const animate = (time: number) => {
-      const rect = canvas.getBoundingClientRect();
-      draw(ctx, rect.width, rect.height, time);
+      frameCountRef.current++;
+
+      // Skip frames on mobile for better performance
+      if (frameCountRef.current % frameSkip === 0) {
+        const rect = canvas.getBoundingClientRect();
+        draw(ctx, rect.width, rect.height, time);
+      }
+
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -118,7 +189,9 @@ export function WaveFractal({ className }: WaveFractalProps) {
     const resizeObserver = new ResizeObserver(updateSize);
     resizeObserver.observe(canvas);
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, {
+      passive: true,
+    });
     window.addEventListener('touchmove', handleTouchMove, {
       passive: true,
     });
@@ -131,7 +204,13 @@ export function WaveFractal({ className }: WaveFractalProps) {
     };
   }, [
     draw,
+    enabled,
+    frameSkip,
   ]);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <canvas

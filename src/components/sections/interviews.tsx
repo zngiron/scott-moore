@@ -99,7 +99,7 @@ export function Interviews() {
   return (
     <section
       id="interviews"
-      className="relative flex min-h-dvh snap-start flex-col justify-center overflow-hidden bg-stone-50"
+      className="relative flex min-h-dvh flex-col justify-center overflow-hidden md:snap-start"
     >
       {/* Content */}
       <motion.div
