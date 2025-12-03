@@ -1,5 +1,11 @@
+import { Expertise } from '@/components/sections/expertise';
 import { Hero } from '@/components/sections/hero';
 
 export default function Page(_: PageProps<'/'>) {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <Expertise />
+    </>
+  );
 }
