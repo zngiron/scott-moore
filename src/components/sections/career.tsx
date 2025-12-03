@@ -27,38 +27,80 @@ function TimelineItem({
   // Use transforms directly on motion values - no React re-renders!
   const bulletScale = useTransform(
     scrollProgress,
-    [itemStart, itemStart + 0.01],
-    [0, 1],
+    [
+      itemStart,
+      itemStart + 0.01,
+    ],
+    [
+      0,
+      1,
+    ],
   );
   const bulletOpacity = useTransform(
     scrollProgress,
-    [itemStart, itemStart + 0.01],
-    [0, 1],
+    [
+      itemStart,
+      itemStart + 0.01,
+    ],
+    [
+      0,
+      1,
+    ],
   );
   const yearOpacity = useTransform(
     scrollProgress,
-    [itemStart, itemStart + 0.02],
-    [0, 1],
+    [
+      itemStart,
+      itemStart + 0.02,
+    ],
+    [
+      0,
+      1,
+    ],
   );
   const yearX = useTransform(
     scrollProgress,
-    [itemStart, itemStart + 0.02],
-    [-10, 0],
+    [
+      itemStart,
+      itemStart + 0.02,
+    ],
+    [
+      -10,
+      0,
+    ],
   );
   const lineScaleY = useTransform(
     scrollProgress,
-    [itemStart + (itemEnd - itemStart) * 0.2, itemStart + (itemEnd - itemStart) * 0.7],
-    [0, 1],
+    [
+      itemStart + (itemEnd - itemStart) * 0.2,
+      itemStart + (itemEnd - itemStart) * 0.7,
+    ],
+    [
+      0,
+      1,
+    ],
   );
   const contentOpacity = useTransform(
     scrollProgress,
-    [itemStart + (itemEnd - itemStart) * 0.3, itemStart + (itemEnd - itemStart) * 0.5],
-    [0, 1],
+    [
+      itemStart + (itemEnd - itemStart) * 0.3,
+      itemStart + (itemEnd - itemStart) * 0.5,
+    ],
+    [
+      0,
+      1,
+    ],
   );
   const contentY = useTransform(
     scrollProgress,
-    [itemStart + (itemEnd - itemStart) * 0.3, itemStart + (itemEnd - itemStart) * 0.5],
-    [10, 0],
+    [
+      itemStart + (itemEnd - itemStart) * 0.3,
+      itemStart + (itemEnd - itemStart) * 0.5,
+    ],
+    [
+      10,
+      0,
+    ],
   );
 
   return (
@@ -122,7 +164,10 @@ export function Career() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end end'],
+    offset: [
+      'start start',
+      'end end',
+    ],
   });
 
   return (
