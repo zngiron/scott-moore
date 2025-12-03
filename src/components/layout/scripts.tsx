@@ -13,9 +13,13 @@ export function Scripts() {
           '@context': 'https://schema.org',
           '@type': 'WebSite',
           url: env.NEXT_PUBLIC_SITE_URL,
-          name: 'Front-End Development',
-          description: 'Front-End Development',
-          image: `${env.NEXT_PUBLIC_SITE_URL}/static/frontend-dev-thumbnail.png`,
+          name: 'Scott Moore',
+          description: 'Scott Moore',
+          image: `${env.NEXT_PUBLIC_SITE_URL}/static/scott-moore-thumbnail.png`,
+          author: {
+            '@type': 'Person',
+            name: 'Scott Moore',
+          },
         })}
       </Script>
     </>

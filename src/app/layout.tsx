@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 
-import { Geist } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
@@ -11,12 +11,24 @@ import { cn } from '@/lib/utils';
 
 import '@/app/globals.css';
 
-const font = Geist({
+const inter = Inter({
   display: 'swap',
   variable: '--font-sans',
   weight: [
-    '500',
-    '700',
+    '400',
+    '600',
+  ],
+  subsets: [
+    'latin',
+  ],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  display: 'swap',
+  variable: '--font-display',
+  weight: [
+    '400',
+    '600',
   ],
   subsets: [
     'latin',
@@ -33,10 +45,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: 'Front-End Development',
-    template: '%s | Front-End Development',
+    default: 'Scott Moore',
+    template: '%s | Scott Moore',
   },
-  description: 'Front-End Development',
+  description: 'Scott Moore',
   openGraph: {
     type: 'website',
     url: '/',
@@ -64,10 +76,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html
       lang="en"
       suppressHydrationWarning
+      className={cn(inter.variable, spaceGrotesk.variable)}
     >
       <body
         className={cn(
-          font.variable,
           'overflow-x-hidden touch-pan-y scroll-smooth',
           'flex flex-col min-h-dvh',
           'font-sans antialiased',
