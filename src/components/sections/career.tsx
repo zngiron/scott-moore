@@ -224,15 +224,19 @@ export function Career() {
 
             {/* Right Column - Timeline */}
             <div className="flex flex-col">
-              {careerItems.map((item, index) => (
-                <TimelineItem
-                  key={`${item.year}-${item.position}`}
-                  item={item}
-                  index={index}
-                  isLast={index === careerItems.length - 1}
-                  scrollProgress={scrollYProgress}
-                />
-              ))}
+              {[
+                ...careerItems,
+              ]
+                .reverse()
+                .map((item, index) => (
+                  <TimelineItem
+                    key={`${item.year}-${item.position}`}
+                    item={item}
+                    index={index}
+                    isLast={index === careerItems.length - 1}
+                    scrollProgress={scrollYProgress}
+                  />
+                ))}
             </div>
           </div>
         </div>
