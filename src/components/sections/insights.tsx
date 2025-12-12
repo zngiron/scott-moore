@@ -124,7 +124,10 @@ export function Insights() {
       )}
     >
       <motion.div
-        className={cn('px-6 py-24', 'lg:px-36 lg:py-32')}
+        className={cn(
+          'mx-auto max-w-screen-2xl px-6 py-24',
+          'lg:px-36 lg:py-32',
+        )}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"

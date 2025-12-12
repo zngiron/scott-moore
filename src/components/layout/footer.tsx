@@ -96,7 +96,7 @@ export function Footer() {
     >
       {/* Content */}
       <motion.div
-        className={cn('relative', 'px-6', 'lg:px-36')}
+        className={cn('relative', 'mx-auto max-w-screen-2xl px-6', 'lg:px-36')}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"

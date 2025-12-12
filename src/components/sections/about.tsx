@@ -177,7 +177,11 @@ export function About() {
     >
       {/* Content */}
       <motion.div
-        className={cn('relative z-10', 'px-6 py-24', 'lg:px-36 lg:py-32')}
+        className={cn(
+          'relative z-10',
+          'mx-auto max-w-screen-2xl px-6 py-24',
+          'lg:px-36 lg:py-32',
+        )}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -186,7 +190,7 @@ export function About() {
           amount: 0.2,
         }}
       >
-        <div className="ml-auto max-w-xl">
+        <div className="ml-auto">
           {/* Header */}
           <motion.p
             className="mb-6 text-xl uppercase tracking-widest text-white/60"

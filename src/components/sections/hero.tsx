@@ -66,6 +66,7 @@ export function Hero() {
       <motion.div
         className={cn(
           'relative z-10',
+          'mx-auto w-full max-w-screen-2xl',
           'flex flex-1 flex-col justify-end',
           'px-6 py-12',
           'lg:flex-none lg:justify-center lg:px-36 lg:py-32',

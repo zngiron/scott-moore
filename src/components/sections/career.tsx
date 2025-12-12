@@ -196,7 +196,7 @@ export function Career() {
     >
       {/* Sticky container */}
       <div className="sticky top-0 flex h-dvh items-center">
-        <div className={cn('w-full px-6', 'lg:px-36')}>
+        <div className={cn('mx-auto w-full max-w-screen-2xl px-6', 'lg:px-36')}>
           {/* Two Column Layout */}
           <div
             className={cn(

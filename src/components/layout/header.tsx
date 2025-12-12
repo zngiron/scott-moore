@@ -66,6 +66,7 @@ export function Header() {
     >
       <div
         className={cn(
+          'mx-auto max-w-screen-2xl',
           'flex items-center justify-between px-6 py-4',
           'lg:px-36',
         )}
