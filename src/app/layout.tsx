@@ -81,9 +81,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         className={cn(
           'overflow-x-hidden touch-pan-y',
           'bg-background font-sans antialiased',
-          // Disable snap scrolling on mobile for smoother experience
-          'overflow-y-scroll scrollbar-hide',
-          'md:snap-y md:snap-mandatory md:scroll-smooth',
+          'overflow-y-scroll scrollbar-hide scroll-smooth',
         )}
       >
         <Providers>

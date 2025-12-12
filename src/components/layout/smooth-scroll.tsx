@@ -2,35 +2,27 @@
 
 import type { PropsWithChildren } from 'react';
 
-import { useEffect } from 'react';
-
-function easeOutQuart(t: number): number {
-  return 1 - (1 - t) ** 4;
-}
-
-function animateScrollTo(targetY: number, duration = 1000) {
-  const startY = window.scrollY;
-  const difference = targetY - startY;
-  const startTime = performance.now();
-
-  function step(currentTime: number) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = easeOutQuart(progress);
-
-    window.scrollTo(0, startY + difference * eased);
-
-    if (progress < 1) {
-      requestAnimationFrame(step);
-    }
-  }
-
-  requestAnimationFrame(step);
-}
+import Lenis from 'lenis';
+import { useEffect, useRef } from 'react';
 
 export function SmoothScrollProvider({ children }: PropsWithChildren) {
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
-    // Handle smooth scroll for anchor links
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      syncTouch: true,
+    });
+    lenisRef.current = lenis;
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    // Handle anchor link clicks
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="/#"]');
@@ -42,9 +34,10 @@ export function SmoothScrollProvider({ children }: PropsWithChildren) {
           const id = href.replace('/#', '');
           const element = document.getElementById(id);
           if (element) {
-            const rect = element.getBoundingClientRect();
-            const targetY = window.scrollY + rect.top;
-            animateScrollTo(targetY, 800);
+            lenis.scrollTo(element, {
+              duration: 1.2,
+              offset: 0,
+            });
           }
         }
       }
@@ -53,6 +46,7 @@ export function SmoothScrollProvider({ children }: PropsWithChildren) {
     document.addEventListener('click', handleAnchorClick);
 
     return () => {
+      lenis.destroy();
       document.removeEventListener('click', handleAnchorClick);
     };
   }, []);

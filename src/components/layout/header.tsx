@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 
 import { ThemeToggle } from '@/components/common/theme-toggle';
+import { easeOut } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 import { useActiveSection } from '@/hooks/use-active-section';
 
@@ -43,7 +44,6 @@ const navigation = [
   },
 ];
 
-// Sections with dark backgrounds that require the dark header variant
 const darkBackgroundSections = [
   'about',
   'career',
@@ -58,7 +58,6 @@ export function Header() {
   const toggleMenu = () => setMobileMenuOpen((prev) => !prev);
   const closeMenu = () => setMobileMenuOpen(false);
 
-  // Use dark header variant when section has dark background
   const isDarkBackground = darkBackgroundSections.includes(activeSection);
 
   return (
@@ -67,6 +66,7 @@ export function Header() {
         'fixed left-0 right-0 top-0 z-100',
         'shadow-2xs backdrop-blur-md',
         'transition-colors duration-300',
+        'safe-top',
         isDarkBackground
           ? 'bg-black/50 text-white'
           : 'bg-white/50 text-foreground dark:bg-background/50',
@@ -74,19 +74,18 @@ export function Header() {
     >
       <div
         className={cn(
-          'mx-auto max-w-screen-2xl',
+          'mx-auto w-full max-w-screen-2xl',
           'flex items-center justify-between px-6 py-4',
           'lg:px-36',
         )}
       >
         <Link
-          href="/"
+          href="/#hero"
           className="whitespace-nowrap font-display text-xl font-semibold"
         >
           Scott Moore
         </Link>
 
-        {/* Desktop Navigation */}
         <nav
           className={cn('hidden items-center gap-6', 'lg:flex')}
           onMouseLeave={() => setHoveredLink(null)}
@@ -114,12 +113,7 @@ export function Header() {
                   }}
                   transition={{
                     duration: 0.3,
-                    ease: [
-                      0.25,
-                      0.4,
-                      0.25,
-                      1,
-                    ],
+                    ease: easeOut,
                   }}
                 />
               </Link>
@@ -128,12 +122,11 @@ export function Header() {
           <ThemeToggle />
         </nav>
 
-        {/* Mobile Controls */}
         <div className={cn('flex items-center gap-2', 'lg:hidden')}>
           <ThemeToggle />
           <button
             type="button"
-            className="-mr-2 p-2 cursor-pointer"
+            className="-mr-2 cursor-pointer p-2"
             onClick={toggleMenu}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
@@ -199,7 +192,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.nav
@@ -257,23 +249,20 @@ export function Header() {
                       y: -10,
                     },
                   }}
+                  whileHover={{
+                    opacity: 0.7,
+                  }}
                   transition={{
                     duration: 0.2,
                   }}
                 >
-                  <motion.div
-                    whileHover={{
-                      opacity: 0.7,
-                    }}
+                  <Link
+                    href={item.href}
+                    className="block py-2 text-lg"
+                    onClick={closeMenu}
                   >
-                    <Link
-                      href={item.href}
-                      className="block py-2 text-lg"
-                      onClick={closeMenu}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
+                    {item.name}
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>

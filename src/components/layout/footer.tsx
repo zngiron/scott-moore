@@ -1,8 +1,11 @@
 'use client';
 
+import type { ReactNode } from 'react';
+
 import { motion } from 'motion/react';
 import { useState } from 'react';
 
+import { containerVariants, easeOut, itemVariants } from '@/lib/motion';
 import { cn } from '@/lib/utils';
 
 function AnimatedLink({
@@ -11,7 +14,7 @@ function AnimatedLink({
   external = false,
 }: {
   href: string;
-  children: React.ReactNode;
+  children: ReactNode;
   external?: boolean;
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -36,67 +39,30 @@ function AnimatedLink({
         }}
         transition={{
           duration: 0.3,
-          ease: [
-            0.25,
-            0.4,
-            0.25,
-            1,
-          ],
+          ease: easeOut,
         }}
       />
     </a>
   );
 }
 
-const containerVariants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [
-        0.25,
-        0.4,
-        0.25,
-        1,
-      ] as const,
-    },
-  },
-};
-
 export function Footer() {
   return (
     <footer
       id="contact"
       className={cn(
-        'overflow-hidden',
-        'relative',
-        'flex min-h-dvh flex-col justify-center py-24',
-        'bg-black',
-        'md:snap-start md:py-32',
-        'sticky top-0 z-[70]',
+        'relative overflow-hidden',
+        'flex min-h-dvh flex-col justify-center',
+        'bg-section-darker',
+        'sticky top-0 z-70',
       )}
     >
-      {/* Content */}
       <motion.div
-        className={cn('relative', 'mx-auto max-w-screen-2xl px-6', 'lg:px-36')}
+        className={cn(
+          'relative safe-bottom',
+          'mx-auto w-full max-w-screen-2xl px-6 py-24',
+          'lg:px-36 lg:py-32',
+        )}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -111,7 +77,6 @@ export function Footer() {
             'lg:flex-row lg:items-start',
           )}
         >
-          {/* Left - Title & Copyright (desktop) */}
           <div className="flex flex-col gap-6">
             <motion.h2
               className={cn(
@@ -123,14 +88,13 @@ export function Footer() {
               Contact
             </motion.h2>
             <motion.p
-              className={cn('hidden', 'text-sm text-white/60', 'lg:block')}
+              className={cn('hidden text-sm text-white/60', 'lg:block')}
               variants={itemVariants}
             >
               © 2025 Scott Moore.
             </motion.p>
           </div>
 
-          {/* Right - Content */}
           <div className="flex max-w-xl flex-col gap-6">
             <motion.p
               className="text-lg leading-7 text-white"
@@ -140,7 +104,6 @@ export function Footer() {
               preserve your wealth for generations to come.
             </motion.p>
 
-            {/* Email */}
             <motion.div
               className="flex flex-col gap-1 text-white"
               variants={itemVariants}
@@ -151,7 +114,6 @@ export function Footer() {
               </AnimatedLink>
             </motion.div>
 
-            {/* LinkedIn */}
             <motion.div
               className="flex flex-col gap-1 text-white"
               variants={itemVariants}
@@ -167,9 +129,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Copyright (mobile) */}
         <motion.p
-          className={cn('mt-12', 'text-sm text-white/60', 'lg:hidden')}
+          className={cn('mt-12 text-sm text-white/60', 'lg:hidden')}
           variants={itemVariants}
         >
           © 2025 Scott Moore.
