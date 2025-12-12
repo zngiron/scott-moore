@@ -112,7 +112,7 @@ function TimelineItem({
         <motion.div
           className={cn(
             'size-2 shrink-0 rounded-full',
-            'bg-foreground',
+            'bg-white',
             'will-change-transform',
           )}
           style={{
@@ -122,10 +122,7 @@ function TimelineItem({
         />
         {/* Year */}
         <motion.p
-          className={cn(
-            'text-sm text-muted-foreground',
-            'will-change-transform',
-          )}
+          className={cn('text-sm text-white/60', 'will-change-transform')}
           style={{
             opacity: yearOpacity,
             x: yearX,
@@ -143,7 +140,7 @@ function TimelineItem({
             <motion.div
               className={cn(
                 'h-full w-px origin-top',
-                'bg-border',
+                'bg-white/20',
                 'will-change-transform',
               )}
               style={{
@@ -161,15 +158,11 @@ function TimelineItem({
             y: contentY,
           }}
         >
-          <p className="font-display text-lg leading-6 text-foreground">
+          <p className="font-display text-lg leading-6 text-white">
             {item.position}
           </p>
-          <p className="text-sm leading-5 text-muted-foreground">
-            {item.company}
-          </p>
-          <p className="text-sm leading-5 text-muted-foreground">
-            {item.description}
-          </p>
+          <p className="text-sm leading-5 text-white/60">{item.company}</p>
+          <p className="text-sm leading-5 text-white/60">{item.description}</p>
         </motion.div>
       </div>
     </div>
@@ -190,7 +183,12 @@ export function Career() {
     <section
       ref={sectionRef}
       id="career"
-      className={cn('relative', 'bg-secondary', 'md:snap-start', 'z-40')}
+      className={cn(
+        'relative',
+        'bg-zinc-900 text-white',
+        'md:snap-start',
+        'z-40',
+      )}
       // Reduced height for better mobile UX
       style={{
         height: `${100 + careerItems.length * 40}vh`,
@@ -208,7 +206,7 @@ export function Career() {
           >
             {/* Left Column - Header */}
             <div className="flex flex-col gap-6">
-              <p className="text-xl uppercase tracking-widest text-muted-foreground">
+              <p className="text-xl uppercase tracking-widest text-white/60">
                 Career
               </p>
 

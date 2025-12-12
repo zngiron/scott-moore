@@ -136,7 +136,7 @@ export function Interviews() {
       className={cn(
         'flex min-h-dvh flex-col justify-center',
         'md:snap-start',
-        'sticky top-0 z-50',
+        'relative z-50',
         'bg-background',
       )}
     >

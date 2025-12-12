@@ -80,7 +80,7 @@ function AnimatedStat({ value, label, prefix = '', suffix = '' }: StatProps) {
         {suffix}
       </motion.p>
       <motion.p
-        className="text-base leading-6 text-muted-foreground"
+        className="text-base leading-6 text-white/60"
         initial={{
           opacity: 0,
           y: 10,
@@ -170,7 +170,7 @@ export function About() {
         'overflow-hidden',
         'relative',
         'flex min-h-dvh flex-col justify-center',
-        'bg-secondary',
+        'bg-zinc-900 text-white',
         'md:snap-start',
         'sticky top-0 z-20',
       )}
@@ -189,7 +189,7 @@ export function About() {
         <div className="ml-auto max-w-xl">
           {/* Header */}
           <motion.p
-            className="mb-6 text-xl uppercase tracking-widest text-muted-foreground"
+            className="mb-6 text-xl uppercase tracking-widest text-white/60"
             variants={itemVariants}
           >
             About
@@ -211,7 +211,7 @@ export function About() {
           <motion.p
             className={cn(
               'mb-12',
-              'text-lg leading-7 text-muted-foreground',
+              'text-lg leading-7 text-white/70',
               'md:mb-16',
             )}
             variants={itemVariants}

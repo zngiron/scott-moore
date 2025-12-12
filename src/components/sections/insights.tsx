@@ -120,7 +120,7 @@ export function Insights() {
         'flex min-h-dvh flex-col justify-center',
         'bg-secondary',
         'md:snap-start',
-        'sticky top-0 z-60',
+        'relative z-60',
       )}
     >
       <motion.div

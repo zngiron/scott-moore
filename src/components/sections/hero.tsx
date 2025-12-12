@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { motion } from 'motion/react';
 
+import { WaveFractal } from '@/components/effects/wave-fractal';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -56,6 +57,11 @@ export function Hero() {
         'bg-background',
       )}
     >
+      {/* Wave Fractal Background */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <WaveFractal className="absolute inset-0 opacity-80" />
+      </div>
+
       {/* Content - First Column */}
       <motion.div
         className={cn(

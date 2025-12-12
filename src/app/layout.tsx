@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from 'next';
 
 import { Inter, Space_Grotesk } from 'next/font/google';
 
-import { Background } from '@/components/layout/background';
 import { Header } from '@/components/layout/header';
 import { Providers } from '@/components/layout/providers';
 import { Scripts } from '@/components/layout/scripts';
@@ -88,7 +87,6 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         )}
       >
         <Providers>
-          <Background />
           <Header />
           <main className="relative z-10">{children}</main>
           <Scripts />

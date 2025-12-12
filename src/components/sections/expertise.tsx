@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
+import { WaveFractal } from '@/components/effects/wave-fractal';
 import { cn } from '@/lib/utils';
 
 const expertiseItems = [
@@ -109,14 +110,20 @@ export function Expertise() {
     <section
       id="expertise"
       className={cn(
+        'relative',
         'flex min-h-dvh flex-col justify-center',
         'md:snap-start',
         'sticky top-0 z-30',
         'bg-background',
       )}
     >
+      {/* Wave Fractal Background */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <WaveFractal className="absolute inset-0 opacity-80" />
+      </div>
+
       <motion.div
-        className={cn('px-6 py-24', 'lg:px-36 lg:py-32')}
+        className={cn('relative z-10', 'px-6 py-24', 'lg:px-36 lg:py-32')}
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
