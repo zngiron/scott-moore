@@ -43,6 +43,13 @@ const navigation = [
   },
 ];
 
+// Sections with dark backgrounds that require the dark header variant
+const darkBackgroundSections = [
+  'about',
+  'career',
+  'contact',
+];
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -51,17 +58,18 @@ export function Header() {
   const toggleMenu = () => setMobileMenuOpen((prev) => !prev);
   const closeMenu = () => setMobileMenuOpen(false);
 
-  const isContact = activeSection === 'contact';
+  // Use dark header variant when section has dark background
+  const isDarkBackground = darkBackgroundSections.includes(activeSection);
 
   return (
     <header
       className={cn(
-        'fixed left-0 right-0 top-0 z-50',
+        'fixed left-0 right-0 top-0 z-100',
         'shadow-2xs backdrop-blur-md',
         'transition-colors duration-300',
-        isContact
+        isDarkBackground
           ? 'bg-black/50 text-white'
-          : 'bg-background/50 text-foreground',
+          : 'bg-white/50 text-foreground dark:bg-background/50',
       )}
     >
       <div
