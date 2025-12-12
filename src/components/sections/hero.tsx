@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { motion } from 'motion/react';
@@ -47,13 +48,21 @@ export function Hero() {
       className={cn(
         'overflow-hidden',
         'relative',
-        'flex min-h-dvh flex-col justify-center',
+        'min-h-dvh',
+        'flex flex-col',
+        'lg:grid lg:grid-cols-2',
         'md:snap-start',
       )}
     >
-      {/* Content */}
+      {/* Content - First Column */}
       <motion.div
-        className={cn('relative z-10', 'px-6 py-24', 'lg:px-36 lg:py-32')}
+        className={cn(
+          'relative z-10',
+          'flex flex-1 flex-col justify-end',
+          'px-6 py-12',
+          'lg:flex-none lg:justify-center lg:px-36 lg:py-32',
+          'lg:min-h-dvh',
+        )}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -92,6 +101,38 @@ export function Hero() {
             </Button>
           </motion.div>
         </div>
+      </motion.div>
+
+      {/* Profile Image - Second Column */}
+      <motion.div
+        className="relative mt-auto flex items-end justify-center lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-1/2"
+        initial={{
+          opacity: 0,
+          y: 30,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.8,
+          delay: 0.5,
+          ease: [
+            0.25,
+            0.4,
+            0.25,
+            1,
+          ],
+        }}
+      >
+        <Image
+          src="/static/scott-moore.png"
+          alt="Scott Moore"
+          width={3000}
+          height={3750}
+          className="h-auto w-full max-w-lg object-contain object-bottom lg:max-w-4xl"
+          priority
+        />
       </motion.div>
     </section>
   );
