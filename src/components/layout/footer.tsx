@@ -91,6 +91,7 @@ export function Footer() {
         'flex min-h-dvh flex-col justify-center py-24',
         'bg-black',
         'md:snap-start md:py-32',
+        'sticky top-0 z-[70]',
       )}
     >
       {/* Content */}

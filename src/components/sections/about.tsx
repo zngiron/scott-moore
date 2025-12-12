@@ -172,6 +172,7 @@ export function About() {
         'flex min-h-dvh flex-col justify-center',
         'bg-secondary',
         'md:snap-start',
+        'sticky top-0 z-20',
       )}
     >
       {/* Content */}

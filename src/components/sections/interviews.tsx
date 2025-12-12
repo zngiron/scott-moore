@@ -133,7 +133,12 @@ export function Interviews() {
   return (
     <section
       id="interviews"
-      className={cn('flex min-h-dvh flex-col justify-center', 'md:snap-start')}
+      className={cn(
+        'flex min-h-dvh flex-col justify-center',
+        'md:snap-start',
+        'sticky top-0 z-50',
+        'bg-background',
+      )}
     >
       {/* Content */}
       <motion.div

@@ -190,7 +190,7 @@ export function Career() {
     <section
       ref={sectionRef}
       id="career"
-      className={cn('relative', 'bg-secondary', 'md:snap-start')}
+      className={cn('relative', 'bg-secondary', 'md:snap-start', 'z-40')}
       // Reduced height for better mobile UX
       style={{
         height: `${100 + careerItems.length * 40}vh`,

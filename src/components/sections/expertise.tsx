@@ -108,7 +108,12 @@ export function Expertise() {
   return (
     <section
       id="expertise"
-      className={cn('flex min-h-dvh flex-col justify-center', 'md:snap-start')}
+      className={cn(
+        'flex min-h-dvh flex-col justify-center',
+        'md:snap-start',
+        'sticky top-0 z-30',
+        'bg-background',
+      )}
     >
       <motion.div
         className={cn('px-6 py-24', 'lg:px-36 lg:py-32')}

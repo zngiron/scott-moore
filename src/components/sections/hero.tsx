@@ -52,6 +52,8 @@ export function Hero() {
         'flex flex-col',
         'lg:grid lg:grid-cols-2',
         'md:snap-start',
+        'sticky top-0 z-10',
+        'bg-background',
       )}
     >
       {/* Content - First Column */}
