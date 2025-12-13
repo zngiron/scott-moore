@@ -111,7 +111,7 @@ export function ExpertiseContent() {
         <motion.div
           className={cn(
             'grid grid-cols-1 gap-4',
-            'md:grid-cols-2 md:gap-6 lg:grid-cols-3',
+            'md:grid-cols-2 md:gap-6 xl:grid-cols-3',
           )}
           variants={containerVariantsFast}
         >

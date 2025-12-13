@@ -2,6 +2,8 @@
 
 import type { Interview } from '@/lib/types';
 
+import Image from 'next/image';
+
 import { Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
@@ -15,6 +17,7 @@ import {
 } from '@/components/ui/dialog';
 import {
   containerVariants,
+  easeOut,
   hoverTransition,
   itemVariantsSlow,
 } from '@/lib/motion';
@@ -28,6 +31,8 @@ function InterviewCard({
   interview: Interview;
   onSelect: (interview: Interview) => void;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   const handleClick = () => {
     if (interview.type === 'linkedin') {
       window.open(interview.url, '_blank', 'noopener,noreferrer');
@@ -41,9 +46,11 @@ function InterviewCard({
       type="button"
       variants={itemVariantsSlow}
       onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className={cn(
         'group',
-        'flex w-full flex-col gap-3 rounded-2xl border border-foreground/10 p-6 text-left',
+        'flex w-full flex-col overflow-hidden rounded-2xl border border-foreground/10 text-left',
         'bg-background/70 backdrop-blur-xl',
         'cursor-pointer',
         'dark:border-transparent',
@@ -53,27 +60,58 @@ function InterviewCard({
       }}
       transition={hoverTransition}
     >
-      <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-muted">
+      <div className="relative flex aspect-video w-full items-center justify-center bg-muted">
+        {interview.thumbnail ? (
+          <Image
+            src={interview.thumbnail}
+            alt={interview.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : null}
         <motion.div
-          whileHover={{
-            scale: 1.1,
+          className="absolute z-10 flex size-14 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm"
+          animate={{
+            scale: isHovered ? 1.1 : 1,
           }}
           transition={hoverTransition}
         >
-          <Play className="size-12 fill-none stroke-foreground stroke-[1.5]" />
+          <Play className="size-6 fill-foreground stroke-foreground stroke-[1.5]" />
         </motion.div>
       </div>
 
-      <div className="flex w-full flex-col gap-2">
-        <p className="text-sm leading-5 text-muted-foreground">
-          {interview.source} · {interview.year}
-        </p>
-        <h3 className="font-display text-xl leading-7 text-foreground">
-          {interview.title}
-        </h3>
-        <p className="line-clamp-2 text-base leading-6 text-muted-foreground">
-          {interview.description}
-        </p>
+      <div className="flex flex-1 flex-col justify-between gap-4 p-6">
+        <div className="flex flex-col gap-2">
+          <p className="text-sm leading-5 text-muted-foreground">
+            Interview · {interview.source} · {interview.year}
+          </p>
+          <h3 className="font-display text-xl font-light leading-7 text-foreground">
+            {interview.title}
+          </h3>
+          <p className="line-clamp-2 text-sm leading-5 text-muted-foreground">
+            {interview.description}
+          </p>
+        </div>
+
+        <div>
+          <span className="relative text-sm font-medium">
+            Watch Video
+            <motion.span
+              className="absolute -bottom-1 left-0 h-px w-full origin-left bg-current"
+              initial={{
+                scaleX: 0,
+              }}
+              animate={{
+                scaleX: isHovered ? 1 : 0,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: easeOut,
+              }}
+            />
+          </span>
+        </div>
       </div>
     </motion.button>
   );
@@ -122,7 +160,7 @@ export function InterviewsContent() {
         <motion.div
           className={cn(
             'grid grid-cols-1 gap-4',
-            'md:grid-cols-2 md:gap-6 lg:grid-cols-3',
+            'md:grid-cols-2 md:gap-6 xl:grid-cols-3',
           )}
           variants={containerVariants}
         >
@@ -145,7 +183,8 @@ export function InterviewsContent() {
         <DialogContent
           className={cn(
             'overflow-hidden',
-            'max-w-6xl gap-0 border-none p-0',
+            'w-full max-w-4xl gap-0 border-none p-0',
+            'sm:max-w-5xl lg:max-w-6xl',
             'bg-background/70 backdrop-blur-xl',
           )}
         >

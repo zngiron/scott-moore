@@ -10,6 +10,7 @@ export type Interview = {
   type: 'youtube' | 'linkedin';
   url: string;
   videoId?: string;
+  thumbnail?: string;
   source: string;
   year: string;
   title: string;
