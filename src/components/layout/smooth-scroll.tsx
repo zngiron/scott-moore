@@ -9,10 +9,18 @@ export function SmoothScrollProvider({ children }: PropsWithChildren) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    );
+
+    if (prefersReducedMotion.matches) {
+      return undefined;
+    }
+
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.08,
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
     });
     lenisRef.current = lenis;
 

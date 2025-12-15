@@ -3,7 +3,13 @@
 import type { MotionValue } from 'motion/react';
 import type { CareerItem } from '@/lib/types';
 
-import { motion, useScroll, useTransform } from 'motion/react';
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'motion/react';
 import { useRef } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -156,6 +162,7 @@ function TimelineItem({
 
 export function CareerContent() {
   const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: [
@@ -163,6 +170,16 @@ export function CareerContent() {
       'end end',
     ],
   });
+
+  const smoothedProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 22,
+    mass: 0.8,
+  });
+
+  const effectiveProgress = prefersReducedMotion
+    ? scrollYProgress
+    : smoothedProgress;
 
   const reversedItems = [
     ...careerItems,
@@ -206,7 +223,7 @@ export function CareerContent() {
                   item={item}
                   index={index}
                   isLast={index === careerItems.length - 1}
-                  scrollProgress={scrollYProgress}
+                  scrollProgress={effectiveProgress}
                   itemCount={careerItems.length}
                 />
               ))}
