@@ -5,16 +5,6 @@ export type CareerItem = {
   description: string;
 };
 
-export type Interview = {
-  id: string;
-  videoPath?: string;
-  thumbnail?: string;
-  source: string;
-  year: string;
-  title: string;
-  description: string;
-};
-
 export type InsightArticle = {
   id: string;
   category: string;

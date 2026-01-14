@@ -1,6 +1,6 @@
 'use client';
 
-import type { Interview } from '@/types';
+import type { Interview } from '@/data/static/interviews';
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -20,7 +20,7 @@ function InterviewCard({ interview, onSelect }: { interview: Interview; onSelect
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    if (interview.videoPath) {
+    if (interview.video) {
       onSelect(interview);
     }
   };
@@ -45,18 +45,18 @@ function InterviewCard({ interview, onSelect }: { interview: Interview; onSelect
       transition={hoverTransition}
     >
       <div className="relative flex aspect-video w-full items-center justify-center bg-muted">
-        {interview.thumbnail ? (
+        {interview.video ? (
           <Image
-            src={interview.thumbnail}
+            src={interview.video}
             alt={interview.title}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : null}
-        {interview.videoPath && !interview.thumbnail ? (
+        {interview.video && !interview.video ? (
           <video
-            src={getMediaUrl(interview.videoPath)}
+            src={getMediaUrl(interview.video)}
             preload="metadata"
             muted
             playsInline
@@ -156,7 +156,7 @@ export function InterviewsContent() {
       </motion.div>
 
       <Dialog
-        open={selectedInterview !== null && selectedInterview.videoPath !== undefined}
+        open={selectedInterview !== null && selectedInterview.video !== undefined}
         onOpenChange={(open) => !open && setSelectedInterview(null)}
       >
         <DialogContent
@@ -167,10 +167,10 @@ export function InterviewsContent() {
             'bg-background/70 backdrop-blur-xl',
           )}
         >
-          {selectedInterview?.videoPath && (
+          {selectedInterview?.video && (
             <div className="aspect-video w-full">
               <video
-                src={getMediaUrl(selectedInterview.videoPath)}
+                src={getMediaUrl(selectedInterview.video)}
                 controls
                 autoPlay
                 className="size-full"
