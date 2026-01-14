@@ -1,0 +1,54 @@
+import type { InsightArticle } from '@/types';
+
+export const insightArticles: InsightArticle[] = [
+  {
+    id: '1',
+    category: 'Global Mobility',
+    date: '2025',
+    source: 'Spears 500',
+    title: 'Scott Moore - Spears 500 Profile',
+    description:
+      'Singapore-based Scott Moore advises private clients on residence and citizenship planning matters across Southeast Asia and Oceania.',
+    url: 'https://spears500.com/adviser/13069/scott-moore',
+  },
+  {
+    id: '2',
+    category: 'Investment Migration',
+    date: 'April 2022',
+    source: 'Philstar',
+    title: 'How to Become a Resident and Citizen of Portugal',
+    description:
+      "An overview of Portugal's Golden Residence Permit Program and the path to citizenship for high-net-worth individuals.",
+    url: 'https://www.philstar.com/business/biz-memos/2022/04/12/2171010/how-become-resident-and-citizen-portugal',
+  },
+  {
+    id: '3',
+    category: 'Investment Migration',
+    date: '2022',
+    source: 'Hubbis',
+    title: 'Top Residence by Investment Options in Europe',
+    description:
+      'Exploring the best European residence by investment programs for domicile diversification strategies.',
+    url: 'https://www.hubbis.com/article/top-residence-by-investment-options-in-europe-for-domicile-diversification',
+  },
+  {
+    id: '4',
+    category: 'Investment Migration',
+    date: '2022',
+    source: 'Inquirer',
+    title: 'Portugal Citizenship Guide for Global Investors',
+    description:
+      'A comprehensive guide on becoming a resident and citizen of Portugal through investment migration programs.',
+    url: 'https://globalnation.inquirer.net/203366/how-to-become-a-resident-and-citizen-of-portugal',
+  },
+  {
+    id: '5',
+    category: 'Regional Insights',
+    date: 'Q1 2022',
+    source: 'Henley & Partners',
+    title: 'Investment Migration Insights: Southeast Asia',
+    description:
+      'Regional analysis from the Henley Global Citizens Report on investment migration trends in Southeast Asia.',
+    url: 'https://www.henleyglobal.com/publications/henley-global-citizens-report-2022-q1/regional-insights/investment-migration-insights-southeast-asia',
+  },
+];
