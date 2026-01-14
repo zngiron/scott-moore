@@ -44,27 +44,18 @@ function InterviewCard({ interview, onSelect }: { interview: Interview; onSelect
       }}
       transition={hoverTransition}
     >
-      <div className="relative flex aspect-video w-full items-center justify-center bg-muted">
-        {interview.video ? (
+      <div className="group relative flex aspect-video w-full items-center justify-center bg-muted">
+        {interview.thumbnail ? (
           <Image
-            src={interview.video}
+            src={getMediaUrl(interview.thumbnail)}
             alt={interview.title}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : null}
-        {interview.video && !interview.video ? (
-          <video
-            src={getMediaUrl(interview.video)}
-            preload="metadata"
-            muted
-            playsInline
-            className="absolute inset-0 size-full object-cover"
-          />
-        ) : null}
         <motion.div
-          className="absolute z-10 flex size-14 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm"
+          className="absolute z-10 flex size-14 items-center justify-center rounded-full bg-foreground/10 backdrop-blur-sm"
           animate={{
             scale: isHovered ? 1.1 : 1,
           }}
