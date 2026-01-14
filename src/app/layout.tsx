@@ -39,18 +39,18 @@ export const metadata: Metadata = {
     default: 'Scott Moore',
     template: '%s | Scott Moore',
   },
-  description: 'Scott Moore',
+  description: 'Scott Moore - Finace Executive',
   openGraph: {
     type: 'website',
     url: '/',
-    siteName: 'Front-End Development',
+    siteName: 'Scott Moore',
     locale: 'en',
     images: [
       {
-        url: '/static/frontend-dev-thumbnail.png',
+        url: '/static/scott-moore-thumbnail.png',
         width: 1200,
         height: 630,
-        alt: 'Front-End Development',
+        alt: 'Scott Moore',
       },
     ],
   },
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
   icons: {
-    icon: '/static/frontend-dev-icon.svg',
+    icon: '/static/scott-moore-icon.png',
   },
 };
 

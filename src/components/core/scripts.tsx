@@ -15,7 +15,7 @@ export function Scripts() {
           url: env.SITE_URL,
           name: 'Scott Moore',
           description: 'Scott Moore',
-          image: `${env.SITE_URL}/static/frontend-dev-thumbnail.png`,
+          image: `${env.SITE_URL}/static/scott-moore-thumbnail.png`,
         })}
       </Script>
     </>
